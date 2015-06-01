@@ -1,0 +1,4 @@
+whisper:
+    directories:
+        - /opt/graphite/storage/whisper
+timezone: UTC
