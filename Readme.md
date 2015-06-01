@@ -170,8 +170,8 @@ To run in the background as a daemon process pass the `-d` parameter:
 
 There are two required parameters and one optional:
 
-1. The `-t` target machine(s) you are running as iperf servers.
-2. The `-p` the poller that will connect to the iperf servers
+1. The `-t` target machine(s) you are running as iperf agent.
+2. The `-p` the poller that will connect to the iperf agent.
 3. The `-s` interval in seconds between polling intervals. The default is 300 seconds which means the poller will run a measurement every 5 minutes againts the target listeners.
 
 >usage: ./run.sh [-s (interval seconds)] [-p (machine that poller runs on)] [-t (list of target servers)]
@@ -180,10 +180,10 @@ Make sure the docker-compose stack is still up and running.
 
 First run against the local virtual-box machine as both the client and server to make sure everything works. The iperf image will be downloaded the first time you run listeners on a new VM/Machine.
 
-**Note**: The polling interval is set pretty low at 45 seconds here for testing purposes. 180-600 seconds (3-10 minutes) seems like reasonable polling boundaries for production.
+**Note**: The polling interval is set pretty low at 60 seconds here for testing purposes. 180-600 seconds (3-10 minutes) seems like reasonable polling boundaries for production.
 ```
 chmod +x ./run.sh
-./run.sh  -s 45 -p virtualbox-machine -t virtualbox-machine 
+./run.sh  -s 60 -p virtualbox-machine -t virtualbox-machine 
 ```
 
 ### Next Add a Cloud Provider to Measure the Inets
@@ -216,7 +216,7 @@ virtualbox-machine     *        virtualbox     Running   tcp://192.168.99.101:23
 Then simply add the new machine after virtualbox-machine
 
 ```
-./run.sh  -s 30 -c virtualbox-machine -t digitalocean-machine virtualbox-machine google-machine 
+./run.sh  -s 180 -p virtualbox-machine -t digitalocean-machine virtualbox-machine google-machine 
 ```
 
 Thats it! Patch, Fork, do whatever you want with it. Thanks to all the various open source projects used for this. Building a throw away infrastrucure is incredibly fun. Special thanks to [ESnet](http://software.es.net/iperf/) for re-rolling iperf into iperf3. It is really nice how the initialized channel from client -> server is reused for the reverse. It gives you bi-directional measurements without having to expose (or NAT) both endpoints, just the channel intiator. And [Grafana](http://grafana.org), well its just awesome. That should be a networkers best friend for pumping data into for data vis.
