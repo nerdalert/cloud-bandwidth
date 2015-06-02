@@ -13,7 +13,8 @@ INFO='\033[01;94m[INFO] '${RESET}
 WARN='\033[01;33m[WARN] '${RESET}
 ERROR='\033[01;31m[ERROR] '${RESET}
 
-export POLLER_IMAGE_NAME="${POLLER_IMAGE_NAME:-bandwidth_poller}"
+#export POLLER_IMAGE_NAME="${POLLER_IMAGE_NAME:-bandwidth_poller}"
+export POLLER_IMAGE_NAME="${POLLER_IMAGE_NAME:-networkstatic/bandwidth-poller}"
 export POLLER_NAME="${POLLER_NAME:-bandwidth_poller}"
 export CARBON_COLLECTOR_NAME="${CARBON_COLLECTOR_NAME:-cloudbandwidth_carbon_1}"
 export BW_AGENT_IMAGE="${BW_AGENT_IMAGE:-networkstatic/iperf3}"
@@ -66,9 +67,10 @@ checkPollerImg(){
 	imageExists=$(docker images | grep ${POLLER_IMAGE_NAME}) > /dev/null 2>&1
 	if [[ ${imageExists} == "" ]]; then
 	    # Temp build hackery until pushed to dockerhub
-        cd ${POLLER_IMAGE_NAME} \
-          && docker build -q -t ${POLLER_IMAGE_NAME} . \
-          && cd ..
+	    docker pull networkstatic/bandwidth-poller
+#        cd ${POLLER_IMAGE_NAME} \
+#          && docker build -q -t ${POLLER_IMAGE_NAME} . \
+#          && cd ..
 	fi
 }
 
@@ -76,8 +78,8 @@ checkPollerImg(){
 rmPoller(){
 	existingClient=$(docker ps -a | grep ${POLLER_IMAGE_NAME}) &>/dev/null
 	if [[ ${existingClient} != "" ]]; then
-	    docker stop ${POLLER_IMAGE_NAME} &>/dev/null &
-	    docker rm ${POLLER_IMAGE_NAME} &>/dev/null &
+	    docker stop ${POLLER_NAME} &>/dev/null &
+	    docker rm ${POLLER_NAME} &>/dev/null &
 	fi
 }
 
@@ -98,7 +100,7 @@ runPoller(){
     # Ensure previous operations are cleaned up
     envs=$(env | grep DOCKER)
     echo "${INFO}Docker ENVs are:" ${envs}
-    echo "${INFO}Deleting and re-creating the poller container ${POLLER_IMAGE_NAME}"
+    echo "${INFO}Deleting and re-creating the poller container named:[ ${POLLER_NAME} ] with the image: [ ${POLLER_IMAGE_NAME} ]"
     rmPoller
 	#######################################################
 	# Note --env=DB_IP variable is if then graphite API is
@@ -160,22 +162,23 @@ runPoller(){
 
 
     MACH_TYPE=$(echo ${target_machine} | awk -F '-' '{print $1}')
-    echo "${WARN}Starting the poller container the following parameters:"
-    echo "${WARN}  container name:[ ${POLLER_NAME} ]"
-    echo "${WARN}  carbon ip:[ ${DB_IP} ]"
-    echo "${WARN}  docker machine type:[ ${MACH_TYPE} ]"
-    echo "${WARN}  bandwidth target agent IP:[ ${BW_AGENT_IP} ]"
-    echo "${WARN}  sample count:[ ${IPERF_SAMPLE_COUNT} ]"
-    echo "${WARN}  image name:[ ${POLLER_IMAGE_NAME} ]"
+    echo "${WARN}${GREEN}Starting the poller container the following parameters:${RESET}"
+    echo "${WARN} -- container name:[${GREEN} ${POLLER_NAME} ${RESET}]"
+    echo "${WARN} -- carbon ip:[${GREEN} ${DB_IP} ${RESET}]"
+    echo "${WARN} -- docker machine type:[${GREEN} ${MACH_TYPE} ${RESET}]"
+    echo "${WARN} -- bandwidth target agent IP:[${GREEN} ${BW_AGENT_IP} ${RESET}]"
+    echo "${WARN} -- sample count:[${GREEN} ${IPERF_SAMPLE_COUNT} ${RESET}]"
+    echo "${WARN} -- image name:[${GREEN} ${POLLER_IMAGE_NAME} ${RESET}]"
     # start the poller
     docker run -i --rm \
-        --name=${POLLER_IMAGE_NAME} \
+        --name=${POLLER_NAME} \
         --env=DB_IP=${DB_IP} \
         --env=BW_AGENT_IP=${BW_AGENT_IP} \
         --env=MACHINE_TYPE=${MACH_TYPE} \
         --env=IPERF_SAMPLE_COUNT=${IPERF_SAMPLE_COUNT} \
         ${POLLER_IMAGE_NAME}
-
+    echo ${INFO}"Measuring the bi-directional bandwidth between machines:"
+    echo ${INFO}"${RED}[ (source poller) $poller_machine ] ${YELLOW}<============>${RED} [ $target_machine (target agent) ]${RESET}"
 #    CMD_RESULT=$?
 #    if [ $CMD_RESULT -ne 0 ]; then
 #      echo "${ERROR}Does the target server specified exist? or is it stopped?"

@@ -33,13 +33,17 @@ docker-compose -f run_demo.yml up
 
 Then point a browser to `http://<DOCKER_IP>:8000`
 
+To stop and remove the demo containers running with compose simply run the following in the same directory as the .yml file:
+
+```
+docker-compose -f run_demo.yml kill
+docker-compose -f run_demo.yml rm -f
+```
+
 **- Quick start real bandwidth**
 
 ```
 git clone https://github.com/nerdalert/cloud-bandwidth.git
-cd cloud-bandwidth/bandwidth_poller/
-docker build -t bandwidth_poller .
-cd ..
 docker-compose up
 ```
 
@@ -128,16 +132,8 @@ To reiterate these are mock values being written to the TSDB using `docker-compo
 Once done with the demo stop and recreate the containers using the default yml file.
 
 ```
-docker-compose run_demo.yml stop
-docker-compose run_demo.yml rm
-```
-
-### Build Poller Agent
-
-The bash wrapper will do this if the image isn't found locally.
-```
-cd bandwidth-poller
-docker build -t bandwidth-poller .
+docker-compose -f run_demo.yml kill
+docker-compose -f run_demo.yml rm -f
 ```
 
 ### Measuring Real Bandwidth
@@ -220,6 +216,14 @@ Then simply add the new machine after virtualbox-machine
 ```
 
 Thats it! Patch, Fork, do whatever you want with it. Thanks to all the various open source projects used for this. Building a throw away infrastrucure is incredibly fun. Special thanks to [ESnet](http://software.es.net/iperf/) for re-rolling iperf into iperf3. It is really nice how the initialized channel from client -> server is reused for the reverse. It gives you bi-directional measurements without having to expose (or NAT) both endpoints, just the channel intiator. And [Grafana](http://grafana.org), well its just awesome. That should be a networkers best friend for pumping data into for data vis.
+
+### Modifying on the Poller Agent
+
+If you want to modify the bandwidth poller, you can build it locally and it will cache it in your images with the following:
+```
+cd bandwidth-poller
+docker build -t networkstatic/bandwidth-poller .
+```
 
 ### Notes on Creating Docker Machines
 

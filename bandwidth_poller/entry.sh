@@ -12,6 +12,9 @@ BW_AGENT_PORT="${BW_AGENT_PORT:-5201}"
 
 # Term colors for funzies
 RESET='\033[00m'
+RESET='\033[00m'
+GREEN='\033[01;32m'
+YELLOW='\033[01;33m'
 INFO='\033[01;94m[INFO]: '${RESET}
 WARN='\033[01;33m[WARN]: '${RESET}
 ERROR='\033[01;31m[ERROR]: '${RESET}
@@ -115,13 +118,13 @@ if [ -z "${BW_AGENT_IP}" ]; then
 	exit 1
 fi
 
-echo "${WARN}Starting the poller with the following parameters (these should align with the logs above ^):"
-echo "${WARN}  agent machine type:[ ${MACHINE_TYPE} ]"
-echo "${WARN}  carbon ip:[ ${DB_IP} ]"
-echo "${WARN}  docker machine type:[ ${MACHINE_TYPE} ]"
-echo "${WARN}  bandwidth target agent IP:[ ${BW_AGENT_IP} ]"
-echo "${WARN}  sample count:[ ${IPERF_SAMPLE_COUNT} ]"
-echo "${INFO}Verifying the target agent ip:port are reachable at:[ ${BW_AGENT_IP}:${BW_AGENT_PORT} ] "
+echo "${WARN}${GREEN}Starting the poller with the following parameters (${YELLOW}these should align with the logs above ^):${RESET}"
+echo "${WARN} -- agent machine type:[${GREEN} ${MACHINE_TYPE} ${RESET}]"
+echo "${WARN} -- carbon ip:[${GREEN} ${DB_IP} ${RESET}]"
+echo "${WARN} -- docker machine type:[${GREEN} ${MACHINE_TYPE} ${RESET}]"
+echo "${WARN} -- bandwidth target agent IP:[${GREEN} ${BW_AGENT_IP} ${RESET}]"
+echo "${WARN} -- sample count:[${GREEN} ${IPERF_SAMPLE_COUNT} ${RESET}]"
+echo "${INFO}Verifying the target agent ip:port are reachable at:[${GREEN} ${BW_AGENT_IP}:${BW_AGENT_PORT} ${RESET}] "
 checkAgent
 
 case  ${MACHINE_TYPE}  in
