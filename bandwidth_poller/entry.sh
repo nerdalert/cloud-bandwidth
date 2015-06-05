@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Note: if you remove then -t (--time) flag, then you want to change then awk 'print $8' to 'print $7'
 # E.g. sudo /usr/bin/iperf -P 1 -t 5 -f bits -c ${BW_AGENT_IP} | tail -n 1 | awk '{print $7}'

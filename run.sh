@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 RED='\033[01;31m'
 RESET='\033[00m'
@@ -53,22 +53,34 @@ usage="${YELLOW}usage: $0 [-s (interval seconds)] [-p (machine that poller runs 
         "
 
 while getopts s:h:t:p: options; do
-    case $options in
+    case ${options} in
         s) seconds=$OPTARG ;;
         p) poller_machine=$OPTARG ; shift 1;;
         t) target_machines=$@;;
-        h) echo $usage;;
-        * ) echo $usage
+        h) echo -e ${usage};;
+        *) echo -e ${usage}
             exit 1;;
     esac
 done
 
 checkPollerImg(){
+    # one-time test to verify docker.sock is g2g
+    VERIFY_DOCKER_CMD=$(docker ps)
+    CMD_RESULT=$?
+    if [ $CMD_RESULT -ne 0 ]; then
+      echo -e "${ERROR}Is docker running? If so check that you have your eval command in place "
+      echo -e "${ERROR}For Example: ${YELLOW}eval \"\$(docker-machine env virtualbox-machine)\"${RESET}"
+    exit 1
+    fi
 	imageExists=$(docker images | grep ${POLLER_IMAGE_NAME}) > /dev/null 2>&1
 	if [[ ${imageExists} == "" ]]; then
 	    # Temp build hackery until pushed to dockerhub
-	    docker pull networkstatic/bandwidth-poller
-#        cd ${POLLER_IMAGE_NAME} \
+	    echo -e "${INFO}The polling container image was not found cached on the poller machine [ ${poller_machine} ]"
+	    echo -e "${INFO}pulling the docker image [ ${GREEN}networkstatic/bandwidth-poller${RESET} ] from Docker Hub. Depending on your bandwidth it may take a few minutes."
+		echo -e "${INFO}If you want to modify the image, do so and then build with [${GREEN} cd ./bandwidth_poller && docker build -t bandwidth_poller . ${RESET}] That will cache the knew build on your docker machine."
+
+	       docker pull networkstatic/bandwidth-poller
+#        cd ${POLLER_NAME} \
 #          && docker build -q -t ${POLLER_IMAGE_NAME} . \
 #          && cd ..
 	fi
@@ -87,7 +99,7 @@ rmPoller(){
 rmAgent(){
 	existingClient=$(docker ps -a | grep ${BW_AGENT_NAME}) 2>/dev/null
 	if [[ ${existingClient} != "" ]]; then
-	     echo "${INFO}Deleting the stale agent container:[ ${BW_AGENT_NAME} ]"
+	    echo -e "${INFO}Deleting the stale agent container:[ ${BW_AGENT_NAME} ]"
 	    docker stop ${BW_AGENT_NAME}  &>/dev/null
 	    docker rm ${BW_AGENT_NAME}  &>/dev/null
 	    sleep 1
@@ -95,12 +107,18 @@ rmAgent(){
 }
 
 runPoller(){
-    echo "${INFO}Running the polling container named:[ ${POLLER_NAME} ] on machine:[ ${poller_machine} ] against the agent machine on:[ ${target_machine} ]"
-	eval "$(docker-machine env ${poller_machine})"
+    echo -e "${INFO}Running the polling container named:[ ${POLLER_NAME} ] on machine:[ ${poller_machine} ] against the agent machine on:[ ${target_machine} ]"
     # Ensure previous operations are cleaned up
+
+#	if [ -z ${POLLER_NAME} ]; then
+	if [ ${POLLER_NAME} != "native" ]; then
+	    eval "$(docker-machine env ${poller_machine})"
+    else
+        unsetEnv
+    fi
     envs=$(env | grep DOCKER)
-    echo "${INFO}Docker ENVs are:" ${envs}
-    echo "${INFO}Deleting and re-creating the poller container named:[ ${POLLER_NAME} ] with the image: [ ${POLLER_IMAGE_NAME} ]"
+    echo -e "${INFO}Docker ENVs are:" ${envs}
+    echo -e "${INFO}Deleting and re-creating the poller container named:[ ${POLLER_NAME} ] with the image: [ ${POLLER_IMAGE_NAME} ]"
     rmPoller
 	#######################################################
 	# Note --env=DB_IP variable is if then graphite API is
@@ -132,43 +150,43 @@ runPoller(){
     dbExists=$(docker ps | grep ${CARBON_COLLECTOR_NAME}) > /dev/null 2>&1
 	if [[ ${dbExists} != "" ]]; then
 	    # Temp build hackery until pushed to dockerhub
-	    export DB_IP=$(docker inspect --format "{{ .NetworkSettings.IPAddress }}" $CARBON_COLLECTOR_NAME)
+	    export DB_IP=$(docker inspect --format "{{ .NetworkSettings.IPAddress }}" ${CARBON_COLLECTOR_NAME})
     elif [ -z ${CARBON_COLLECTOR_MACHINE} ]; then
-        echo "$INFO Setting the DB IP address to the user specified machine named ${CARBON_COLLECTOR_MACHINE}"
+        echo -e "$INFO Setting the DB IP address to the user specified machine named ${CARBON_COLLECTOR_MACHINE}"
 	    export DB_IP=$(docker-machine ip ${CARBON_COLLECTOR_MACHINE})
 	else
-	    echo "${ERROR}No container named ${CARBON_COLLECTOR_NAME} was found running."
-	            echo  "${ERROR}The time series database address [ DB_IP ] env not found. Is [ docker-compose up ] running?"
-	            echo "${ERROR}Run [ docker ps ] to verify. If it is not running then try:"
-	             echo "${ERROR}${GREEN} [ docker-compose stop && docker-compose rm -f  && docker-compose up ] ${RESET} \
-	             to recreate the stack form the [ cloud_bandwidth ] directory (TSDB data is preserved)."
+	    echo -e "${ERROR}No container named ${CARBON_COLLECTOR_NAME} was found running."
+        echo -e "${ERROR}The time series database address [ DB_IP ] env not found. Is [ docker-compose up ] running?"
+        echo -e "${ERROR}Run [ docker ps ] to verify. If it is not running then try:"
+        echo -e "${ERROR}${GREEN} [ docker-compose stop && docker-compose rm -f  && docker-compose up ] ${RESET} \
+            to recreate the stack form the [ cloud_bandwidth ] directory (TSDB data is preserved)."
 	    exit 1
 	fi
 
     if [ -z "${DB_IP}" ]; then
-     echo  $usage
-        echo  "${ERROR}The time series database address [ DB_IP ] env not found. Is the service running? Run [ docker ps ] to check"
-        echo "${ERROR}cloudbandwidth_carbon_1 not found, ensure graphite is running with [ docker-compose up ]"
+        echo -e ${usage}
+        echo -e "${ERROR}The time series database address [ DB_IP ] env not found. Is the service running? Run [ docker ps ] to check"
+        echo -e "${ERROR}cloudbandwidth_carbon_1 not found, ensure graphite is running with [ docker-compose up ]"
         exit 1
     fi
 
     if [[ ${target_machine} = *"virtualbox"* || ${target_machine} = *"fusion"*  ]]; then
         BW_AGENT_IP=$(docker inspect --format "{{ .NetworkSettings.IPAddress }}" ${BW_AGENT_NAME})
-        echo "${INFO}The target agent appears local and uses an IP of - BW_AGENT_IP:[ ${BW_AGENT_IP} ]";
+        echo -e "${INFO}The target agent appears local and uses an IP of - BW_AGENT_IP:[ ${BW_AGENT_IP} ]";
     else
         BW_AGENT_IP=$(docker-machine ip ${target_machine})
-        echo "${INFO}The target bandwidth agent appears remote with an IP of - BW_AGENT_IP:[ ${BW_AGENT_IP} ]";
+        echo -e "${INFO}The target bandwidth agent appears remote with an IP of - BW_AGENT_IP:[ ${BW_AGENT_IP} ]";
     fi
 
 
-    MACH_TYPE=$(echo ${target_machine} | awk -F '-' '{print $1}')
-    echo "${WARN}${GREEN}Starting the poller container the following parameters:${RESET}"
-    echo "${WARN} -- container name:[${GREEN} ${POLLER_NAME} ${RESET}]"
-    echo "${WARN} -- carbon ip:[${GREEN} ${DB_IP} ${RESET}]"
-    echo "${WARN} -- docker machine type:[${GREEN} ${MACH_TYPE} ${RESET}]"
-    echo "${WARN} -- bandwidth target agent IP:[${GREEN} ${BW_AGENT_IP} ${RESET}]"
-    echo "${WARN} -- sample count:[${GREEN} ${IPERF_SAMPLE_COUNT} ${RESET}]"
-    echo "${WARN} -- image name:[${GREEN} ${POLLER_IMAGE_NAME} ${RESET}]"
+    MACH_TYPE=$(echo -e ${target_machine} | awk -F '-' '{print $1}')
+    echo -e "${WARN}${GREEN}Starting the poller container the following parameters:${RESET}"
+    echo -e "${WARN} -- container name:[${GREEN} ${POLLER_NAME} ${RESET}]"
+    echo -e "${WARN} -- carbon ip:[${GREEN} ${DB_IP} ${RESET}]"
+    echo -e "${WARN} -- target machine type:[${GREEN} ${MACH_TYPE} ${RESET}]"
+    echo -e "${WARN} -- bandwidth target agent IP:[${GREEN} ${BW_AGENT_IP} ${RESET}]"
+    echo -e "${WARN} -- sample count:[${GREEN} ${IPERF_SAMPLE_COUNT} ${RESET}]"
+    echo -e "${WARN} -- image name:[${GREEN} ${POLLER_IMAGE_NAME} ${RESET}]"
     # start the poller
     docker run -i --rm \
         --name=${POLLER_NAME} \
@@ -177,11 +195,11 @@ runPoller(){
         --env=MACHINE_TYPE=${MACH_TYPE} \
         --env=IPERF_SAMPLE_COUNT=${IPERF_SAMPLE_COUNT} \
         ${POLLER_IMAGE_NAME}
-    echo ${INFO}"Measuring the bi-directional bandwidth between machines:"
-    echo ${INFO}"${RED}[ (source poller) $poller_machine ] ${YELLOW}<============>${RED} [ $target_machine (target agent) ]${RESET}"
+    echo -e ${INFO}"Measuring the bi-directional bandwidth between machines:"
+    echo -e ${INFO}"${RED}[ (source poller) $poller_machine ] ${YELLOW}<============>${RED} [ $target_machine (target agent) ]${RESET}"
 #    CMD_RESULT=$?
 #    if [ $CMD_RESULT -ne 0 ]; then
-#      echo "${ERROR}Does the target server specified exist? or is it stopped?"
+#      echo -e "${ERROR}Does the target server specified exist? or is it stopped?"
 #    exit 1
 #    fi
     sleep 1
@@ -200,7 +218,7 @@ runAgent(){
         ${BW_AGENT_IMAGE} -s 2>/dev/null
 
     sleep 3
-    echo "${INFO}Machine started"
+    echo -e "${INFO}Machine started"
     # Unset then docker-machine env explicitly
 	unsetEnv
 }
@@ -214,23 +232,24 @@ dm(){
 	docker-machine $@
 }
 
+if [  $# -eq 0 ]; then
+    echo -e ${usage}
+    echo -e "${ERROR}No machine names were passed in the machines argument"
+    exit 1
+fi
+
 time=$(($seconds))
 if [ ${time} -lt 2 ]; then
-    echo ${usage}
+    echo -e ${usage}
 	exit 1
 fi
 
-if [[  $# -eq 0 ]]; then
-    echo ${usage}
-    echo  "${ERROR}No machine names were passed in the machines argument"
-    exit 1
-fi
 # Verify the poller image exist on the polling host
 checkPollerImg
 #sleep $time
 while [ 0 -eq 0 ]; do
-    echo "${INFO}Interval timer between bandwidth tests is set for: ${time} seconds"
-    echo "${YELLOW}To stop this process use ctrl^c ${RESET}"
+    echo -e "${INFO}Interval timer between bandwidth tests is set for: ${time} seconds"
+    echo -e "${YELLOW}To stop this process use ctrl^c ${RESET}"
     shift $((OPTIND-1))
     for target_machine in $@; do
         runAgent

@@ -248,21 +248,12 @@
           "interval": null,
           "targets": [
             {
-              "target": "averageSeries(bandwidth.download.virtualbox)"
-            },
-            {
-              "target": "averageSeries(bandwidth.download.vmwarefusion)"
-            },
-            {
-              "target": "averageSeries(bandwidth.download.vmwarevsphere)"
-            },
-            {
-              "target": "averageSeries(bandwidth.download.openstack)"
+              "target": "averageSeries(bandwidth.download.*)"
             }
           ],
           "cacheTimeout": null,
           "format": "bps",
-          "prefix": "CURRENT PRIVATE CLOUD DOWNLOAD",
+          "prefix": "CURRENT COMBINED DOWNLOAD",
           "postfix": "",
           "nullText": null,
           "valueMaps": [
@@ -305,21 +296,12 @@
           "interval": null,
           "targets": [
             {
-              "target": "averageSeries(bandwidth.upload.virtualbox)"
-            },
-            {
-              "target": "averageSeries(bandwidth.upload.vmwarefusion)"
-            },
-            {
-              "target": "averageSeries(bandwidth.upload.vmwarevsphere)"
-            },
-            {
-              "target": "averageSeries(bandwidth.upload.openstack)"
+              "target": "averageSeries(bandwidth.upload.*)"
             }
           ],
           "cacheTimeout": null,
           "format": "bps",
-          "prefix": "CURRENT PRIVATE CLOUD UPLOAD",
+          "prefix": "CURRENT COMBINED UPLOAD",
           "postfix": "",
           "nullText": null,
           "valueMaps": [
@@ -347,137 +329,6 @@
             "full": false,
             "lineColor": "rgb(246, 226, 16)",
             "fillColor": "rgba(83, 83, 68, 0.35)"
-          }
-        },
-        {
-          "title": "",
-          "error": false,
-          "span": 6,
-          "editable": true,
-          "type": "singlestat",
-          "id": 15,
-          "links": [],
-          "maxDataPoints": 100,
-          "interval": null,
-          "targets": [
-            {
-              "target": "averageSeries(bandwidth.download.digitalocean)"
-            },
-            {
-              "target": "averageSeries(bandwidth.download.google)"
-            },
-            {
-              "target": "averageSeries(bandwidth.download.rackspace)"
-            },
-            {
-              "target": "averageSeries(bandwidth.download.softlayer)"
-            },
-            {
-              "target": "averageSeries(bandwidth.download.vmwarevcloudair)"
-            },
-            {
-              "target": "averageSeries(bandwidth.download.amazonec2)"
-            },
-            {
-              "target": "averageSeries(bandwidth.download.azure)"
-            }
-          ],
-          "cacheTimeout": null,
-          "format": "bps",
-          "prefix": "CURRENT PUBLIC CLOUD DOWNLOAD",
-          "postfix": "",
-          "nullText": null,
-          "valueMaps": [
-            {
-              "value": "",
-              "op": "=",
-              "text": ""
-            }
-          ],
-          "nullPointMode": "connected",
-          "valueName": "current",
-          "prefixFontSize": "30%",
-          "valueFontSize": "70%",
-          "postfixFontSize": "50%",
-          "thresholds": "",
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": [
-            "rgba(50, 172, 45, 0.97)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(245, 54, 54, 0.9)"
-          ],
-          "sparkline": {
-            "show": true,
-            "full": false,
-            "lineColor": "rgb(0, 214, 255)",
-            "fillColor": "rgba(74, 113, 190, 0.34)"
-          },
-          "height": ""
-        },
-        {
-          "title": "",
-          "error": false,
-          "span": 6,
-          "editable": true,
-          "type": "singlestat",
-          "id": 16,
-          "links": [],
-          "maxDataPoints": 100,
-          "interval": null,
-          "targets": [
-            {
-              "target": "averageSeries(bandwidth.upload.digitalocean)"
-            },
-            {
-              "target": "averageSeries(bandwidth.upload.vmwarevcloudair)"
-            },
-            {
-              "target": "averageSeries(bandwidth.upload.rackspace)"
-            },
-            {
-              "target": "averageSeries(bandwidth.upload.softlayer)"
-            },
-            {
-              "target": "averageSeries(bandwidth.upload.google)"
-            },
-            {
-              "target": "averageSeries(bandwidth.upload.amazonec2)"
-            },
-            {
-              "target": "averageSeries(bandwidth.upload.azure)"
-            }
-          ],
-          "cacheTimeout": null,
-          "format": "bps",
-          "prefix": "CURRENT PUBLIC CLOUD UPLOAD",
-          "postfix": "",
-          "nullText": null,
-          "valueMaps": [
-            {
-              "value": "",
-              "op": "=",
-              "text": ""
-            }
-          ],
-          "nullPointMode": "connected",
-          "valueName": "current",
-          "prefixFontSize": "30%",
-          "valueFontSize": "70%",
-          "postfixFontSize": "50%",
-          "thresholds": "",
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": [
-            "rgba(50, 172, 45, 0.97)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(245, 54, 54, 0.9)"
-          ],
-          "sparkline": {
-            "show": true,
-            "full": false,
-            "lineColor": "rgb(246, 235, 5)",
-            "fillColor": "rgba(170, 164, 44, 0.2)"
           }
         }
       ]

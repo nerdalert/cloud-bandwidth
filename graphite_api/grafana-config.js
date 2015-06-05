@@ -34,6 +34,12 @@ define(['settings'], function(Settings) {
         // set to false to disable unsaved changes warning
         unsaved_changes_warning: true,
 
+        // Note if you experience issues with the timezone in your browser being mismatched
+        // you can explicitly set a timezone here. The following would be NY EST -5.
+        // NY EST Example: timezoneOffset: "-0500",
+        // The default.json in the docker-compose is set to  "timezone": "browser"
+        // timezoneOffset: "-0500",
+
         // set the default timespan for the playlist feature
         // Example: "1m", "1h"
         playlist_timespan: "1m",
