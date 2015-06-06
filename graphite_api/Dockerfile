@@ -18,6 +18,12 @@ RUN apt-get update -q \
     && apt-get clean
 
 RUN pip install -U pip
+
+# Recent cairocffi-0.7.0 breaks graphite-api build :/
+RUN wget https://pypi.python.org/packages/source/c/cairocffi/cairocffi-0.6.tar.gz
+RUN tar xvzf cairocffi-${CAIROCFFI_VERSION}.tar.gz
+RUN pip install -e /cairocffi-${CAIROCFFI_VERSION}
+
 RUN pip install uwsgi graphite-api[sentry]==${GRAPHITE_API_VERSION}
 
 RUN wget -qO- http://grafanarel.s3.amazonaws.com/grafana-${GRAFANA_VERSION}.tar.gz | tar xvzf - \
