@@ -12,7 +12,6 @@ BW_AGENT_PORT="${BW_AGENT_PORT:-5201}"
 
 # Term colors for funzies
 RESET='\033[00m'
-RESET='\033[00m'
 GREEN='\033[01;32m'
 YELLOW='\033[01;33m'
 INFO='\033[01;94m[INFO]: '${RESET}
@@ -27,11 +26,11 @@ runIperfIngress(){
     BW_RESULT=$(/usr/bin/iperf3 -P 1 -R -t ${IPERF_SAMPLE_COUNT} -f bits -c ${BW_AGENT_IP} | tail -n 3 | head -n1 | awk '{print $7}')
     CMD_RESULT=$?
     if [ $CMD_RESULT -eq 0 ]; then
-      echo "${INFO}Successfully connected to the remote iperf3 server container [ ${BW_AGENT_IP} ]"
-      writeStatIngress
+        echo -e "${INFO}Successfully connected to the remote iperf3 server container [ ${BW_AGENT_IP} ]"
+        writeStatIngress
     else
-        echo "${ERROR}Was unable to connect to the remote iperf server [ ${BW_AGENT_IP} ], is the container running? Use 'docker ps'"
-      exit 1
+        echo -e "${ERROR}Was unable to connect to the remote iperf server [ ${BW_AGENT_IP} ], is the container running? Use 'docker ps'"
+        exit 1
     fi
 }
 
@@ -46,46 +45,46 @@ runIperfEgress(){
 
 writeStatIngress() {
     if [ -z ${BW_RESULT} ]; then
-    echo "${ERROR}there was a problem connecting to the iperf server"
-    exit 1
+        echo -e "${ERROR}there was a problem connecting to the iperf server"
+        exit 1
     fi
-    echo "${INFO}Writing driver type: [ ${MACHINE_TYPE} with a download speed: [ ${BW_RESULT}b/ps ] to the DB at: [ ${DB_IP} ]"
+    echo -e "${INFO}Writing driver type: [ ${MACHINE_TYPE} with a download speed: [ ${BW_RESULT}b/ps ] to the DB at: [ ${DB_IP} ]"
     # Write to Graphite using then plain text API
     echo "bandwidth.download.${MACHINE_TYPE} $BW_RESULT `date +%s`" |  nc ${DB_IP} ${DB_PORT} &
-    echo "${INFO}Ingress Write Complete"
+    echo -e "${INFO}Ingress Write Complete"
     sleep 1
 }
 
 writeStatEgress() {
     if [ -z ${BW_RESULT} ]; then
-    echo "${ERROR}there was a problem connecting to the iperf server"
-    exit 1
+        echo -e "${ERROR}there was a problem connecting to the iperf server"
+        exit 1
     fi
-    echo "${INFO}Writing driver type: [ ${MACHINE_TYPE} with an upload speed: [ ${BW_RESULT}b/ps ] to the DB at: [ ${DB_IP} ]"
+    echo -e "${INFO}Writing driver type: [ ${MACHINE_TYPE} with an upload speed: [ ${BW_RESULT}b/ps ] to the DB at: [ ${DB_IP} ]"
    # Write to Graphite using then plain text API
     echo "bandwidth.upload.${MACHINE_TYPE} $BW_RESULT `date +%s`" | nc ${DB_IP} ${DB_PORT} &
-    echo "${INFO}Egress BW Write Complete"
+    echo -e "${INFO}Egress BW Write Complete"
     sleep 1
 }
 
 checkAgent() {
     # verify you can reach then port running graphite
     if nc -v -z -w 2 ${BW_AGENT_IP} ${BW_AGENT_PORT} 2>/dev/null 1>/dev/null; then
-        echo "${INFO}Connection to ${BW_AGENT_IP}:${BW_AGENT_PORT} was successful, now running bandwidth tests"
+        echo -e "${INFO}Connection to ${BW_AGENT_IP}:${BW_AGENT_PORT} was successful, now running bandwidth tests"
     else
-        echo "${ERROR}Connection to ${BW_AGENT_IP}:${BW_AGENT_PORT} failed; verify the service/container \
+        echo -e "${ERROR}Connection to ${BW_AGENT_IP}:${BW_AGENT_PORT} failed; verify the service/container \
         is running and the port is not blocked by a firewall."
-        echo "${ERROR}Test with [ nc -v -z -w 2 ${BW_AGENT_IP} ${BW_AGENT_PORT} ] OR [ telnet ${BW_AGENT_IP} ${BW_AGENT_PORT} ]"
+        echo -e "${ERROR}Test with [ nc -v -z -w 2 ${BW_AGENT_IP} ${BW_AGENT_PORT} ] OR [ telnet ${BW_AGENT_IP} ${BW_AGENT_PORT} ]"
         exit 1
     fi
 }
 
 # Script Begins Here
 
-echo "${INFO}Testing bandwidth to an iperf3 service at the IP:[ ${BW_AGENT_IP} ] and machine driver type:[ ${MACHINE_TYPE} ]"
+echo -e "${INFO}Testing bandwidth to an iperf3 service at the IP:[ ${BW_AGENT_IP} ] and machine driver type:[ ${MACHINE_TYPE} ]"
 
 if [ -z ${DB_IP} ]; then
-    echo "Data storage server DB_IP is undefined. Is the docker-compose stack running with Graphite and Grafana "
+    echo -e "Data storage server DB_IP is undefined. Is the docker-compose stack running with Graphite and Grafana "
     exit 1
 fi
 
@@ -93,13 +92,13 @@ fi
 ping -i.5 -c3 ${DB_IP} 2>/dev/null 1>/dev/null
 if [ "$?" != 0 ]
 then
-    echo "Was not able to ping the remote host ${DB_IP} check that the IP is right"
+    echo -e "Was not able to ping the remote host ${DB_IP} check that the IP is right"
     exit 1
 fi
 
 # verify netcat is installed
 if ! [ -x "$(command -v nc)" ]; then
-    echo "-----> netcat was not found and required to test DB up status"
+    echo -e "${ERROR}-----> netcat was not found and required to test DB up status"
     exit 1
 fi
 
@@ -118,70 +117,70 @@ if [ -z "${BW_AGENT_IP}" ]; then
 	exit 1
 fi
 
-echo "${WARN}${GREEN}Starting the poller with the following parameters (${YELLOW}these should align with the logs above ^):${RESET}"
-echo "${WARN} -- agent machine type:[${GREEN} ${MACHINE_TYPE} ${RESET}]"
-echo "${WARN} -- carbon ip:[${GREEN} ${DB_IP} ${RESET}]"
-echo "${WARN} -- docker machine type:[${GREEN} ${MACHINE_TYPE} ${RESET}]"
-echo "${WARN} -- bandwidth target agent IP:[${GREEN} ${BW_AGENT_IP} ${RESET}]"
-echo "${WARN} -- sample count:[${GREEN} ${IPERF_SAMPLE_COUNT} ${RESET}]"
-echo "${INFO}Verifying the target agent ip:port are reachable at:[${GREEN} ${BW_AGENT_IP}:${BW_AGENT_PORT} ${RESET}] "
+echo -e "${WARN}${GREEN}Starting the poller with the following parameters (${YELLOW}these should align with the logs above ^):${RESET}"
+echo -e "${WARN} -- agent machine type:[${GREEN} ${MACHINE_TYPE} ${RESET}]"
+echo -e "${WARN} -- carbon ip:[${GREEN} ${DB_IP} ${RESET}]"
+echo -e "${WARN} -- docker machine type:[${GREEN} ${MACHINE_TYPE} ${RESET}]"
+echo -e "${WARN} -- bandwidth target agent IP:[${GREEN} ${BW_AGENT_IP} ${RESET}]"
+echo -e "${WARN} -- sample count:[${GREEN} ${IPERF_SAMPLE_COUNT} ${RESET}]"
+echo -e "${INFO}Verifying the target agent ip:port are reachable at:[${GREEN} ${BW_AGENT_IP}:${BW_AGENT_PORT} ${RESET}] "
 checkAgent
 
 case  ${MACHINE_TYPE}  in
     amazonec2)
-        echo "${INFO}Driver type is: amazonec2"
+        echo -e "${INFO}Driver type is: amazonec2"
         runIperfIngress
         runIperfEgress
         ;;
     azure)
-        echo "${INFO}Driver type is: azure"
+        echo -e "${INFO}Driver type is: azure"
         runIperfIngress
         runIperfEgress
         ;;
     digitalocean)
-        echo "${INFO}Driver type is: digitalocean"
+        echo -e "${INFO}Driver type is: digitalocean"
         runIperfIngress
         runIperfEgress
         sleep 1
         exit 1
         ;;
     google)
-        echo "${INFO}Driver type is: google"
+        echo -e "${INFO}Driver type is: google"
         runIperfIngress
         runIperfEgress
         ;;
     openstack)
-        echo "${INFO}Driver type is: openstack"
+        echo -e "${INFO}Driver type is: openstack"
         runIperfIngress
         runIperfEgress
         ;;
     rackspace)
-        echo "${INFO}Driver type is: rackspace"
+        echo -e "${INFO}Driver type is: rackspace"
         runIperfIngress
         runIperfEgress
         ;;
     softlayer)
-        echo "${INFO}Driver type is: softlayer"
+        echo -e "${INFO}Driver type is: softlayer"
         runIperfIngress
         runIperfEgress
         ;;
     virtualbox)
-        echo "${INFO}Driver type is: virtualbox"
+        echo -e "${INFO}Driver type is: virtualbox"
         runIperfIngress
         runIperfEgress
         ;;
     vmwarefusion)
-        echo "${INFO}Driver type is: vmwarefusion"
+        echo -e "${INFO}Driver type is: vmwarefusion"
         runIperfIngress
         runIperfEgress
         ;;
     vmwarevcloudair)
-        echo "${INFO}Driver type is: vmwarevcloudair"
+        echo -e "${INFO}Driver type is: vmwarevcloudair"
         runIperfIngress
         runIperfEgress
         ;;
     vmwarevsphere)
-        echo "${INFO}Driver type is: vmwarevsphere"
+        echo -e "${INFO}Driver type is: vmwarevsphere"
         runIperfIngress
         runIperfEgress
         ;;

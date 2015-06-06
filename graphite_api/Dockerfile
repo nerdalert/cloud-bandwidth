@@ -3,6 +3,7 @@ FROM debian:jessie
 # SW versioning todo: bump to 2.x
 ENV GRAPHITE_API_VERSION 1.0.1
 ENV GRAFANA_VERSION 1.9.1
+ENV CAIROCFFI_VERSION 0.6
 
 VOLUME /srv/graphite
 
@@ -15,6 +16,7 @@ RUN apt-get update -q \
     python-dev \
     python-pip \
     && apt-get clean
+
 RUN pip install -U pip
 RUN pip install uwsgi graphite-api[sentry]==${GRAPHITE_API_VERSION}
 

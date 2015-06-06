@@ -99,7 +99,7 @@ rmPoller(){
 rmAgent(){
 	existingClient=$(docker ps -a | grep ${BW_AGENT_NAME}) 2>/dev/null
 	if [[ ${existingClient} != "" ]]; then
-	    echo -e "${INFO}Deleting the stale agent container:[ ${BW_AGENT_NAME} ]"
+	    echo -e "${INFO}Discarding the old agent container named:[ ${BW_AGENT_NAME} ]"
 	    docker stop ${BW_AGENT_NAME}  &>/dev/null
 	    docker rm ${BW_AGENT_NAME}  &>/dev/null
 	    sleep 1
@@ -196,7 +196,7 @@ runPoller(){
         --env=IPERF_SAMPLE_COUNT=${IPERF_SAMPLE_COUNT} \
         ${POLLER_IMAGE_NAME}
     echo -e ${INFO}"Measuring the bi-directional bandwidth between machines:"
-    echo -e ${INFO}"${RED}[ (source poller) $poller_machine ] ${YELLOW}<============>${RED} [ $target_machine (target agent) ]${RESET}"
+    echo -e ${INFO}"${GREEN}[ (source poller) $poller_machine ] ${YELLOW}<============>${GREEN} [ $target_machine (target agent) ]${RESET}"
 #    CMD_RESULT=$?
 #    if [ $CMD_RESULT -ne 0 ]; then
 #      echo -e "${ERROR}Does the target server specified exist? or is it stopped?"

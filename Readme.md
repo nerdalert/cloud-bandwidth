@@ -89,6 +89,13 @@ chmod +x ./run.sh
 ./run.sh  -s 45 -p virtualbox-machine -t virtualbox-machine 
 ```
 
+A simple way to get the external address is:
+
+```
+docker-machine ip vmwarefusion-machine
+172.16.166.157
+```
+
 Then point a browser to `http://<DOCKER_IP>:8000`
 
 If you dont see data in the browser but instead see `datapoints outside time range` then change your time to the past 12 hours and you should see the data. Javascript is notoriously finicky with timezones. You can explicitly set one or use UTC. I have run into this a couple of times with grafana but havent figured out the pattern yet so will patch the config when I do.
