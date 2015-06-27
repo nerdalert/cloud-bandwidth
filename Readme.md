@@ -23,6 +23,8 @@ The longer an application runs the greater the odds of its state getting screwed
 
 For my fellow hack first read later peoples here is the quick up and running instructions. To setup your environment take a look at the [Docker Docs](https://docs.docker.com/machine/) and check out some install scripts [here](https://github.com/nerdalert/docker-devoops-scripts). I haven't tested the bash wrapper on anything other then a Mac as I ran out of weekend. This is kinda cool becuase you only need an open port on the target container that is listening for inbound connections to measure both directions (bi-directional). The client -> server channel is reused for the reverse measurement client <- server. So for example, your poller can be sitting behind a NAT translation or a firewall with no ingress rules allowed to the host and still measure both up and downstream bandwidth.
 
+There is also a version using `InfluxDB 0.9.1+` and `Grafana v2.2+` at [nerdalert/ts-net](https://github.com/nerdalert/ts-net). The *pros* are the Influx Time Series DB mechanics are really good, there are less moving parts and the Grafana is migrated to `v2.0+` where it was rewritten in Go. The *cons* are InfluxDB APIs drastically changed with `0.9` and so did the Grafana integration. 
+
 **- QuickStart Demo**
 
 ```
@@ -250,15 +252,16 @@ telnet  <IP_address> 5201
 telnet $(docker-machine ip digitalocean-machine) 5201
 ```
 
-Now add a cloud provider, in this case I am using digital ocean. Make sure docker-machine sees all of the machines you are going to use in a healthy status:
+Now add a cloud provider, in this case I am using digital ocean. Make sure docker-machine sees all of the machines you are going to use in a healthy `running` status:
 
 ```
 docker-machine ls
 NAME                   ACTIVE   DRIVER         STATE     URL                         SWARM
 digitalocean-machine            digitalocean   Running   tcp://45.55.146.243:2376
 virtualbox-machine     *        virtualbox     Running   tcp://192.168.99.101:2376
+google-machine                  google         Running
 ```
-Then simply add the new machine after virtualbox-machine
+Then simply list the new machine(s) after virtualbox-machine with a space betewen them.
 
 ```
 ./run.sh  -s 180 -p virtualbox-machine -t digitalocean-machine virtualbox-machine google-machine 
