@@ -17,11 +17,13 @@ WARN='\033[01;33m[WARN] '${RESET}
 ERROR='\033[01;31m[ERROR] '${RESET}
 
 # Boot2Docker RC
-BOOT2DOCKER_RC="https://github.com/tianon/boot2docker/releases/download/v1.7.0-rc1/boot2docker.iso"
+# Releases at: https://github.com/boot2docker/boot2docker/releases
+BOOT2DOCKER_RC="https://github.com/boot2docker/boot2docker/releases/download/v1.7.1/boot2docker.iso"
 
 # Docker Machine v0.3.0-rc1
-DARWIN_DMACHINE="https://github.com/docker/machine/releases/download/v0.3.0-rc1/docker-machine_darwin-amd64"
-LINUX_DMACHINE="https://github.com/docker/machine/releases/download/v0.3.0-rc1/docker-machine_linux-amd64"
+# Releases at https://github.com/docker/machine/releases
+DARWIN_DMACHINE="https://github.com/docker/machine/releases/download/v0.3.1/docker-machine_darwin-amd64"
+LINUX_DMACHINE="https://github.com/docker/machine/releases/download/v0.3.1/docker-machine_linux-amd64"
 
 # Uncomment for Docker Machine Nightly Build
 # DARWIN_DMACHINE="https://docker-machine-builds.evanhazlett.com/latest/docker-machine_darwin_amd64"
@@ -35,7 +37,8 @@ LINUX_DMACHINE="https://github.com/docker/machine/releases/download/v0.3.0-rc1/d
 # DARWIN_DOCKER="https://test.docker.com/builds/Darwin/x86_64/docker-1.7.0-rc1"
 
 # Docker Compose RC for both OS X and Linux
-XPLAT_DCOMPOSE="https://github.com/docker/compose/releases/download/1.3.0rc1/docker-compose-`uname -s`-`uname -m`"
+# Releases at: https://github.com/docker/compose/releases
+XPLAT_DCOMPOSE="https://github.com/docker/compose/releases/download/1.3.3/docker-compose-`uname -s`-`uname -m`"
 
 command_exists () {
     type "$1" &> /dev/null ;
