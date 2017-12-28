@@ -2,10 +2,9 @@
 
 *FYI* - This doesn't currently build. I have been too swamped with day job to fix it up. I will at some point hopefully.
 
-### Overview
-
-
 ---
+
+### Overview
 
 I will be doing a network app of the month series of blog posts. For some it will be someone else's cool project I see on [Github](https://github.com/search/advanced) and [Docker Hub Registry](https://registry.hub.docker.com), other times like this one I will stitch together an app to share. In this example we will use Docker Machine, Docker Compose and Docker Engine to bring up bandwidth measurements of both inside your data center and to the Internet. 
 
