@@ -1,8 +1,9 @@
 # Cloud Bandwidth Performance Monitoring with Docker
 
+*FYI* - This doesn't currently build. I have been too swamped with day job to fix it up. I will at some point hopefully.
+
 ### Overview
 
-*FYI* - This doesn't currently build. I have been too swamped with day job to fix it up. I will at some point hopefully.
 
 ---
 
