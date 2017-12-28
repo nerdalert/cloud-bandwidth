@@ -2,6 +2,8 @@
 
 ### Overview
 
+*FYI* - This doesn't currently build. I have been too swamped with day job to fix it up. I will at some point hopefully.
+
 I will be doing a network app of the month series of blog posts. For some it will be someone else's cool project I see on [Github](https://github.com/search/advanced) and [Docker Hub Registry](https://registry.hub.docker.com), other times like this one I will stitch together an app to share. In this example we will use Docker Machine, Docker Compose and Docker Engine to bring up bandwidth measurements of both inside your data center and to the Internet. 
 
 What I like about this example networking use case is folks can start thinking about immutable infrastructures. In this example we will spin up a poller and agents to be polled. After each polling round, the poller and agent containers are deleted. As the next polling cycle comes along we simply start new containers. So the beauty is I no longer have to worry about the state of the long running service. 
