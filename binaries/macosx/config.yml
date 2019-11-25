@@ -1,0 +1,9 @@
+---
+test-length: 5
+test-interval: 300
+server-port: 5201
+grafana-address: localhost
+grafana-port: 2003
+iperf-servers:
+  - 172.17.0.3: azure
+  - 172.17.0.4: edge-1
