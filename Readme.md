@@ -2,13 +2,13 @@
 
 ### Overview
 
-Network visibility is one of the most important assets in a network engineer's toolkit. This is a tool measuring bandwidth that can be useful for capacity planning, SLAs, troubleshooting or any other scenario that having a realtime and historical measurements of bandwidth is useful.
+Network visibility is one of the most important assets in a network engineer's toolkit. This is a tool measuring bandwidth that can be useful for capacity planning, SLAs, troubleshooting or any other scenario that having a realtime and historical measurements of bandwidth is useful. Multiple cloud environments, coupled with data gravity driving clusters of compute at the edge is increasing the network sprawl and piling on the ever-growing challenges for network ops/architecture/engineering.
 
 This project is designed to measure bandwidth to distributed endpoints across networks and clouds. Having visibility to edge and multi-cloud resources can get overly complicated and/or expensive with many solutions. Heavyweight agents can be problematic.
 
 This is a simple method of 
 - Setting up iperf servers on your edge/clouds/enterprise as listeners
-- Polling the servers
+- Polling the listeners
 - Graphing the results into a TSDB 
 - Visualizing the results into dashboards with Grafana
 
@@ -114,8 +114,6 @@ At any time you can delete the container with:
 docker stop iperf-svr && docker rm iperf-svr
 ```
 
-Located with the binaries in the [binaries directories](./binaries) is a config.yml file. The config file needs to be in the same directory as the binary until I add some CLI options that will enable a specified location to be referenced.
-
 For testing this out, I recommend starting some iperf servers in containers on your desktop to make troubleshooting easier. The poller is a container so there is no need to map ports if you are running your test iperf server on the same machine as where you are running the `cbandwidth` binary.
 
 ```yml
@@ -138,25 +136,29 @@ iperf-servers:
 # The value (after the colon )is the name that will show up in grafana 
 ```
 
+Located with the binaries in the [binaries directories](./binaries) is a config.yml file. The config file either needs to be in the same directory as the binary or referenced with a flag.
+
 Now start the poller by dropping into the binaries directory and running the binary for your system. Docker is required to run these binaries. The app provides a sample of the bi-drectional bandwidth by testing both upload and download speeds between the server and poller.
 
 Mac:
 
 ```sh
 cd ./binaries/macosx/
-./cbandwidth
+./cbandwidth -config=./config.yml
 ```
 
 Linux:
 
 ```sh
 cd ./binaries/linux/
-./cbandwidth
+./cbandwidth -config=./config.yml
 ```
+
+To view the underlying commands being run such as the iperf polling and the writes to Carbon, simply add the `./cbandwidth -debug` flag.
 
 Here is some example output of the app polling three endpoints:
 
-![](http://networkstatic.net/wp-content/uploads/2019/11/cbandwidth.gif)
+![](http://networkstatic.net/wp-content/uploads/2019/11/cbandwidth-800.gif)
 
 
 You can also of course run this using `go run cbandwidth.go` directly. You can also build binaries for your machine type. For other hardware archetectures you can cross-compile in go. I just did the usual Darwin/Linux archs. Supported types can be seen with `go tool dist list` and is as simple as the following example `GOOS=linux GOARCH=amd64 go build -v cbandwidth.go`.
