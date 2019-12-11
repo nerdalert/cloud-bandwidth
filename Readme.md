@@ -103,11 +103,22 @@ On your edge devices that you are measuring bandidth to, start the iperf servers
 
 
 ```sh
-# running the container in daemon mode with -d is the best idea but for getting started I recommend:
+# running the container in daemon mode with `-d` is the best idea but for 
+# getting started to view the output for debugging the setup with stdout, I recommend:
 docker run -it --restart=always --name=iperf-svr networkstatic/iperf3 -s
-# or from a bash with:
+```
+As you go beyond testing on your localhost, you will also likely want to map the iperf listening port 5201 to be exposed for remote connections like so using the flag `-p 5201:5201`:
+
+```sh
+docker run -it --restart=always --name=iperf3-server2 -p 5201:5201  networkstatic/iperf3 -s
+```
+
+Just as valid, if you dont feel like using a container, you can simply install iperf3 and run it in the default namespace:
+
+```sh
 iperf3 -s
 ```
+
 At any time you can delete the container with:
 
 ```sh
@@ -124,7 +135,9 @@ test-length: 5
 test-interval: 300
 # iperf server port
 server-port: 5201
-# Address of the graphite/grafana stack running in a container (docker for mac uses localhost)
+# Address of the graphite/grafana stack running in a container (docker for mac uses localhost).
+# For a setup beyond a dev environment, grafana-address will be a routable/reachable address
+# that the polling host can connect to in order to run the client/server test.
 grafana-address: localhost
 grafana-port: 2003
 iperf-servers: 

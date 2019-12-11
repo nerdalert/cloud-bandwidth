@@ -6,6 +6,7 @@ import (
 	"github.com/Sirupsen/logrus"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	"net"
 	"os"
 	"os/exec"
 	"strings"
@@ -76,6 +77,7 @@ func main() {
 		if err := yaml.Unmarshal([]byte(data), &config); err != nil {
 			log.Fatal(err)
 		}
+		graphiteSocket := net.JoinHostPort(config.TsdbServer, config.TsdbPort)
 		for _, val := range config.Entry {
 			for endpointAddress, endpointName := range val {
 				if endpointName == "" {
@@ -94,17 +96,11 @@ func main() {
 					log.Errorf("Verify iperf is running and reachable at %s:%s", endpointAddress, config.ServerPort)
 					log.Errorln(err, iperfDownResults)
 				} else {
+					// Write the download results to the tsdb
 					log.Infof("Download results for endpoint %s -> %s bps", endpointAddress, iperfDownResults)
-					timestamp := getUxDate()
-					grafanaResults, err := runCmd("echo \"bandwidth.download."+endpointName+" "+
-						iperfDownResults+" "+timestamp+"\" | nc "+
-						config.TsdbServer+" "+config.TsdbPort, cli)
-					if err != nil {
-						log.Errorf("Error writing to the graphite server at %s:%s", config.TsdbServer, config.TsdbPort)
-						log.Errorf("Verify the graphite server is running and reachable at %s:%s",
-							config.TsdbServer, config.TsdbPort)
-						log.Errorln(err, grafanaResults)
-					}
+					timeDownNow := time.Now().Unix()
+					sendGraphite("tcp", graphiteSocket, fmt.Sprintf("bandwidth.download.%s %s %d\n",
+						endpointName , iperfDownResults, timeDownNow))
 				}
 				// Test the upload speed to the iperf endpoint
 				iperfUpResults, err := runCmd(fmt.Sprintf("docker run -i --rm %s -P 1 -R -t %s "+
@@ -119,17 +115,11 @@ func main() {
 					log.Errorf("Verify iperf is running and reachable at %s:%s", endpointAddress, config.ServerPort)
 					log.Errorln(err, iperfUpResults)
 				} else {
+					// Write the upload results to the tsdb
 					log.Infof("Upload results for endpoint %s -> %s bps", endpointAddress, iperfUpResults)
-					timestamp := getUxDate()
-					grafanaResults, err := runCmd("echo \"bandwidth.upload."+endpointName+" "+iperfUpResults+
-						" "+timestamp+"\" | nc "+
-						config.TsdbServer+" "+config.TsdbPort, cli)
-					if err != nil {
-						log.Errorf("Error writing to the graphite server at %s:%s", config.TsdbServer, config.TsdbPort)
-						log.Errorf("Verify the graphite server is running and reachable at %s:%s",
-							config.TsdbServer, config.TsdbPort)
-						log.Errorln(err, grafanaResults)
-					}
+					timeUpNow := time.Now().Unix()
+					sendGraphite("tcp", graphiteSocket, fmt.Sprintf("bandwidth.upload.%s %s %d\n",
+						endpointName , iperfUpResults, timeUpNow))
 				}
 			}
 		}
@@ -139,7 +129,7 @@ func main() {
 	}
 }
 
-// Run the iperf cmd and return the output and error
+// Run the iperf container and return the output and any errors
 func runCmd(command string, cli *Cli) (string, error) {
 	command = strings.TrimSpace(command)
 	var cmd string
@@ -154,9 +144,18 @@ func runCmd(command string, cli *Cli) (string, error) {
 	return strings.TrimSpace(string(output)), err
 }
 
-// Return Unix date
-func getUxDate() string {
-	t := time.Now().Unix()
-	tsec := strings.Fields(fmt.Sprint(t))
-	return tsec[0]
+// Write the results to a graphite socket
+func sendGraphite(connType string, socket string, msg string) {
+	//conn, err := net.Dial(connType, *socket)
+	conn, err := net.Dial(connType, socket)
+	if err != nil {
+		log.Errorf("Could not connect to the graphite server -> %s", socket)
+		log.Errorf("Verify the graphite server is running and reachable at %s", socket)
+	} else {
+		defer conn.Close()
+		_, err = fmt.Fprintf(conn, msg)
+		if err != nil {
+			log.Errorf("Error writing to the graphite server at -> %s", socket)
+		}
+	}
 }
