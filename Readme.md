@@ -6,7 +6,7 @@ Network visibility is one of the most important assets in a network engineer's t
 
 This project is designed to measure bandwidth to distributed endpoints across networks and clouds. Having visibility to edge and multi-cloud resources can get overly complicated and/or expensive with many solutions. Heavyweight agents can be problematic.
 
-This is a simple method of 
+This is a simple method of:
 - Setting up iperf servers on your edge/clouds/enterprise as listeners
 - Polling the listeners
 - Graphing the results into a TSDB 
@@ -140,6 +140,9 @@ server-port: 5201
 # that the polling host can connect to in order to run the client/server test.
 grafana-address: localhost
 grafana-port: 2003
+# The prefix of the stored tsdb data in graphite
+tsdb-download-prefix: bandwidth.download
+tsdb-upload-prefix: bandwidth.upload
 iperf-servers: 
   - 172.17.0.3: azure
   - 172.17.0.4: digitalocean

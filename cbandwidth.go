@@ -19,6 +19,8 @@ type Config struct {
 	ServerPort   string    `yaml:"server-port"`
 	TsdbServer   string    `yaml:"grafana-address"`
 	TsdbPort     string    `yaml:"grafana-port"`
+	TsdbDownPrefix     string    `yaml:"tsdb-download-prefix"`
+	TsdbUpPrefix     string    `yaml:"tsdb-upload-prefix"`
 	Entry        []Servers `yaml:"iperf-servers"`
 }
 
@@ -99,8 +101,8 @@ func main() {
 					// Write the download results to the tsdb
 					log.Infof("Download results for endpoint %s -> %s bps", endpointAddress, iperfDownResults)
 					timeDownNow := time.Now().Unix()
-					sendGraphite("tcp", graphiteSocket, fmt.Sprintf("bandwidth.download.%s %s %d\n",
-						endpointName , iperfDownResults, timeDownNow))
+					sendGraphite("tcp", graphiteSocket, fmt.Sprintf("%s.%s %s %d\n",
+						config.TsdbDownPrefix, endpointName , iperfDownResults, timeDownNow))
 				}
 				// Test the upload speed to the iperf endpoint
 				iperfUpResults, err := runCmd(fmt.Sprintf("docker run -i --rm %s -P 1 -R -t %s "+
@@ -118,8 +120,8 @@ func main() {
 					// Write the upload results to the tsdb
 					log.Infof("Upload results for endpoint %s -> %s bps", endpointAddress, iperfUpResults)
 					timeUpNow := time.Now().Unix()
-					sendGraphite("tcp", graphiteSocket, fmt.Sprintf("bandwidth.upload.%s %s %d\n",
-						endpointName , iperfUpResults, timeUpNow))
+					sendGraphite("tcp", graphiteSocket, fmt.Sprintf("%s.%s %s %d\n",
+						config.TsdbUpPrefix, endpointName , iperfUpResults, timeUpNow))
 				}
 			}
 		}
