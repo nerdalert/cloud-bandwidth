@@ -14,14 +14,14 @@ import (
 )
 
 type Config struct {
-	TestDuration string    `yaml:"test-length"`
-	TestInterval string    `yaml:"test-interval"`
-	ServerPort   string    `yaml:"server-port"`
-	TsdbServer   string    `yaml:"grafana-address"`
-	TsdbPort     string    `yaml:"grafana-port"`
-	TsdbDownPrefix     string    `yaml:"tsdb-download-prefix"`
-	TsdbUpPrefix     string    `yaml:"tsdb-upload-prefix"`
-	Entry        []Servers `yaml:"iperf-servers"`
+	TestDuration   string    `yaml:"test-length"`
+	TestInterval   string    `yaml:"test-interval"`
+	ServerPort     string    `yaml:"server-port"`
+	TsdbServer     string    `yaml:"grafana-address"`
+	TsdbPort       string    `yaml:"grafana-port"`
+	TsdbDownPrefix string    `yaml:"tsdb-download-prefix"`
+	TsdbUpPrefix   string    `yaml:"tsdb-upload-prefix"`
+	Entry          []Servers `yaml:"iperf-servers"`
 }
 
 type Servers map[string]string
@@ -102,7 +102,7 @@ func main() {
 					log.Infof("Download results for endpoint %s -> %s bps", endpointAddress, iperfDownResults)
 					timeDownNow := time.Now().Unix()
 					sendGraphite("tcp", graphiteSocket, fmt.Sprintf("%s.%s %s %d\n",
-						config.TsdbDownPrefix, endpointName , iperfDownResults, timeDownNow))
+						config.TsdbDownPrefix, endpointName, iperfDownResults, timeDownNow))
 				}
 				// Test the upload speed to the iperf endpoint
 				iperfUpResults, err := runCmd(fmt.Sprintf("docker run -i --rm %s -P 1 -R -t %s "+
@@ -121,7 +121,7 @@ func main() {
 					log.Infof("Upload results for endpoint %s -> %s bps", endpointAddress, iperfUpResults)
 					timeUpNow := time.Now().Unix()
 					sendGraphite("tcp", graphiteSocket, fmt.Sprintf("%s.%s %s %d\n",
-						config.TsdbUpPrefix, endpointName , iperfUpResults, timeUpNow))
+						config.TsdbUpPrefix, endpointName, iperfUpResults, timeUpNow))
 				}
 			}
 		}
@@ -148,7 +148,6 @@ func runCmd(command string, cli *Cli) (string, error) {
 
 // Write the results to a graphite socket
 func sendGraphite(connType string, socket string, msg string) {
-	//conn, err := net.Dial(connType, *socket)
 	conn, err := net.Dial(connType, socket)
 	if err != nil {
 		log.Errorf("Could not connect to the graphite server -> %s", socket)
