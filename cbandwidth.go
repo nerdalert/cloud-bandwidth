@@ -86,7 +86,7 @@ func main() {
 					endpointName = endpointAddress
 				}
 				// Test the download speed to the iperf endpoint
-				iperfDownResults, err := runCmd(fmt.Sprintf("docker run -i --rm %s -P 1 -t %s -f bits "+
+				iperfDownResults, err := runCmd(fmt.Sprintf("docker run -i --rm %s -P 1 -t %s -f K "+
 					"-p %s -c %s | tail -n 3 | head -n1 | awk '{print $7}'",
 					iperfImg,
 					config.TestDuration,
@@ -106,7 +106,7 @@ func main() {
 				}
 				// Test the upload speed to the iperf endpoint
 				iperfUpResults, err := runCmd(fmt.Sprintf("docker run -i --rm %s -P 1 -R -t %s "+
-					"-f bits -p %s -c %s | tail -n 3 | head -n1 | awk '{print $7}'",
+					"-f K -p %s -c %s | tail -n 3 | head -n1 | awk '{print $7}'",
 					iperfImg,
 					config.TestDuration,
 					config.ServerPort,
