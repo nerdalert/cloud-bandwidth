@@ -168,7 +168,7 @@
           "x-axis": true,
           "y-axis": true,
           "y_formats": [
-            "bits",
+            "kbytes",
             "short"
           ],
           "grid": {
@@ -351,7 +351,7 @@
           "x-axis": true,
           "y-axis": true,
           "y_formats": [
-            "bits",
+            "kbytes",
             "short"
           ],
           "grid": {
