@@ -1,16 +1,18 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
-	"github.com/Sirupsen/logrus"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"net"
 	"os"
 	"os/exec"
 	"strings"
 	"time"
+
+	"github.com/sirupsen/logrus"
+	"gopkg.in/yaml.v2"
 )
 
 type Config struct {
@@ -26,37 +28,37 @@ type Config struct {
 
 type Servers map[string]string
 
-type Endpoint struct {
-	ServerIP   string
-	Port       string
-	ServerName string
-}
-
 type Cli struct {
-	Debug      bool
-	ConfigPath string
-	Help       bool
+	Debug       bool
+	NoContainer bool
+	ImageRepo   string
+	ConfigPath  string
+	Help        bool
 }
 
 var cli *Cli
 var iperfImg = "networkstatic/iperf3"
+var iperfBinary string
 var log = logrus.New()
 
-func SetLogger(l *logrus.Logger) {
-	log = l
-}
-
 func init() {
-	const (
-		debugFlag     = false
-		debugDescrip  = "Run in debug mode to display all shell commands being executed"
-		configPath    = "./config.yml"
-		configDescrip = "Path to the configuration file -config=path/config.yml"
-		helpFlag      = false
-		helpDescrip   = "Print Usage Options"
+	var (
+		debugFlag          = false
+		debugDescrip       = "Run in debug mode to display all shell commands being executed"
+		noContainer        = false
+		noContainerDescrip = "Do not use docker or podman and run the iperf3 binary by the host"
+		imageRepo          = "networkstatic/iperf3"
+		imageRepoDescrip   = "Do not use docker or podman and run the iperf3 binary by the host"
+		configPath         = "./config.yaml"
+		configDescrip      = "Path to the configuration file -config=path/config.yaml"
+		helpFlag           = false
+		helpDescrip        = "Print usage options"
 	)
+
 	cli = &Cli{}
 	flag.BoolVar(&cli.Debug, "debug", debugFlag, debugDescrip)
+	flag.BoolVar(&cli.NoContainer, "nocontainer", noContainer, noContainerDescrip)
+	flag.StringVar(&cli.ImageRepo, "image", imageRepo, imageRepoDescrip)
 	flag.StringVar(&cli.ConfigPath, "config", configPath, configDescrip)
 	flag.BoolVar(&cli.Help, "help", helpFlag, helpDescrip)
 }
@@ -67,18 +69,28 @@ func main() {
 		flag.PrintDefaults()
 		os.Exit(1)
 	}
+
+	if cli.NoContainer {
+		iperfBinary = "iperf3"
+	} else {
+		runtime := checkContainerRuntime()
+		iperfBinary = fmt.Sprintf("%s run -i --rm %s", runtime, cli.ImageRepo)
+	}
+
 	for {
 		// Read in the yaml configuration from config.yaml
 		data, err := ioutil.ReadFile(cli.ConfigPath)
 		if err != nil {
 			log.Fatalln("There was a problem opening the configuration file. Make sure "+
-				"'config.yml' is located in the same directory as the binary 'cbandwidth' or set"+
-				" the location using -config=path/config.yml || Error: ", err)
+				"'config.yaml' is located in the same directory as the binary 'cloud-bandwidth' or set"+
+				" the location using -config=path/config.yaml [Error]: ", err)
 		}
+		// read in the config file
 		config := Config{}
 		if err := yaml.Unmarshal([]byte(data), &config); err != nil {
 			log.Fatal(err)
 		}
+
 		graphiteSocket := net.JoinHostPort(config.TsdbServer, config.TsdbPort)
 		for _, val := range config.Entry {
 			for endpointAddress, endpointName := range val {
@@ -86,9 +98,8 @@ func main() {
 					endpointName = endpointAddress
 				}
 				// Test the download speed to the iperf endpoint
-				iperfDownResults, err := runCmd(fmt.Sprintf("docker run -i --rm %s -P 1 -t %s -f K "+
-					"-p %s -c %s | tail -n 3 | head -n1 | awk '{print $7}'",
-					iperfImg,
+				iperfDownResults, err := runCmd(fmt.Sprintf("%s -P 1 -t %s -f K -p %s -c %s | tail -n 3 | head -n1 | awk '{print $7}'",
+					iperfBinary,
 					config.TestDuration,
 					config.ServerPort,
 					endpointAddress,
@@ -99,15 +110,14 @@ func main() {
 					log.Errorln(err, iperfDownResults)
 				} else {
 					// Write the download results to the tsdb
-					log.Infof("Download results for endpoint %s -> %s bps", endpointAddress, iperfDownResults)
+					log.Infof("Download results for endpoint %s [%s] -> %s bps", endpointAddress, endpointName, iperfDownResults)
 					timeDownNow := time.Now().Unix()
 					sendGraphite("tcp", graphiteSocket, fmt.Sprintf("%s.%s %s %d\n",
 						config.TsdbDownPrefix, endpointName, iperfDownResults, timeDownNow))
 				}
 				// Test the upload speed to the iperf endpoint
-				iperfUpResults, err := runCmd(fmt.Sprintf("docker run -i --rm %s -P 1 -R -t %s "+
-					"-f K -p %s -c %s | tail -n 3 | head -n1 | awk '{print $7}'",
-					iperfImg,
+				iperfUpResults, err := runCmd(fmt.Sprintf("%s -P 1 -R -t %s -f K -p %s -c %s | tail -n 3 | head -n1 | awk '{print $7}'",
+					iperfBinary,
 					config.TestDuration,
 					config.ServerPort,
 					endpointAddress,
@@ -118,7 +128,7 @@ func main() {
 					log.Errorln(err, iperfUpResults)
 				} else {
 					// Write the upload results to the tsdb
-					log.Infof("Upload results for endpoint %s -> %s bps", endpointAddress, iperfUpResults)
+					log.Infof("Upload results for endpoint %s [%s] -> %s bps", endpointAddress, endpointName, iperfUpResults)
 					timeUpNow := time.Now().Unix()
 					sendGraphite("tcp", graphiteSocket, fmt.Sprintf("%s.%s %s %d\n",
 						config.TsdbUpPrefix, endpointName, iperfUpResults, timeUpNow))
@@ -159,4 +169,24 @@ func sendGraphite(connType string, socket string, msg string) {
 			log.Errorf("Error writing to the graphite server at -> %s", socket)
 		}
 	}
+}
+
+// checkContainerRuntime checks for docker or podman
+func checkContainerRuntime() string {
+
+	cmd := exec.Command("docker", "--version")
+	_, err := cmd.Output()
+	if err == nil {
+		return "docker"
+	}
+	cmd = exec.Command("podman", "--version")
+	_, err = cmd.Output()
+	if err == nil {
+		return "podman"
+	}
+	if err != nil {
+		log.Fatal(errors.New("docker or podman is required for container mode, use the flag \"--nocontainer\" to not use containers"))
+	}
+
+	return ""
 }
