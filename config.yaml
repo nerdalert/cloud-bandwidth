@@ -5,12 +5,12 @@ test-length: 5
 test-interval: 300
 # iperf server port
 server-port: 5201
-# Address of the graphite/grafana stack running in a container (docker for mac uses localhost).
-# For a setup beyond a dev environment, grafana-address will be a routable/reachable address
+# address of the graphite/grafana stack running in a container (docker for mac uses localhost).
+# for a setup beyond a dev environment, grafana-address will be a routable/reachable address
 # that the polling host can connect to in order to run the client/server test.
 grafana-address: localhost
 grafana-port: 2003
-# The prefix of the stored tsdb data in graphite
+# the prefix of the stored tsdb data in graphite
 tsdb-download-prefix: bandwidth.download
 tsdb-upload-prefix: bandwidth.upload
 iperf-servers:
@@ -19,4 +19,4 @@ iperf-servers:
   - 172.17.0.5: colo_datacenter_xyz
 # iperf-servers are the remote iperf servers getting polled
 # the key is the address getting polled
-# The value (after the colon )is the name that will show up in grafana
+# the value (after the colon) is the name that will show up in grafana

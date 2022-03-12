@@ -28,10 +28,10 @@ Start the TSDB and Grafana in your preferred container runtime, below is a nice 
 
 ```sh
 docker run -d\
- --name go-graphite\
- --restart=always\
+ --name go-graphite \
+ --restart=always \
  -p 80:80 \
- -p 2003-2004:2003-2004\
+ -p 2003-2004:2003-2004 \
  gographite/go-graphite
  
  # or using Podman

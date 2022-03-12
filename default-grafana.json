@@ -1,1178 +1,1549 @@
 {
-  "id": null,
-  "title": "Bandwidth Dashboard",
-  "originalTitle": "Bandwidth Dashboard",
-  "tags": [],
-  "style": "dark",
-  "timezone": "browser",
+  "annotations": {
+    "enable": false,
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
   "editable": true,
-  "hideControls": false,
-  "sharedCrosshair": false,
-  "rows": [
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "panels": [
     {
-      "title": "New row",
-      "height": "250px",
+      "aliasColors": {
+        "azure": "#CFFAFF",
+        "digitalocean": "#6ED0E0",
+        "openstack": "#705DA0",
+        "rackspace": "#F9D9F9",
+        "virtualbox": "#AEA2E0",
+        "vmwarevcloudair": "#F9934E",
+        "vmwarevsphere": "#E0F9D7"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
       "editable": true,
-      "collapse": false,
-      "panels": [
+      "error": false,
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 8,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 3,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 3,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
         {
-          "title": "Combined Upload Bandwidth",
-          "error": false,
-          "span": 12,
-          "editable": true,
-          "type": "graph",
-          "id": 8,
-          "datasource": null,
-          "renderer": "flot",
-          "x-axis": true,
-          "y-axis": true,
-          "y_formats": [
-            "bps",
-            "short"
-          ],
-          "grid": {
-            "leftMax": null,
-            "rightMax": null,
-            "leftMin": null,
-            "rightMin": null,
-            "threshold1": null,
-            "threshold2": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "lines": true,
-          "fill": 0,
-          "linewidth": 3,
-          "points": true,
-          "pointradius": 3,
-          "bars": false,
-          "stack": false,
-          "percentage": false,
-          "legend": {
-            "show": true,
-            "values": true,
-            "min": true,
-            "max": true,
-            "current": true,
-            "total": false,
-            "avg": true,
-            "alignAsTable": true,
-            "hideEmpty": true
-          },
-          "nullPointMode": "connected",
-          "steppedLine": false,
-          "tooltip": {
-            "value_type": "cumulative",
-            "shared": true
-          },
-          "targets": [
-            {
-              "target": "aliasByMetric(bandwidth.upload.*)"
-            }
-          ],
-          "aliasColors": {
-            "digitalocean": "#6ED0E0",
-            "virtualbox": "#AEA2E0",
-            "openstack": "#705DA0",
-            "rackspace": "#F9D9F9",
-            "azure": "#CFFAFF",
-            "vmwarevcloudair": "#F9934E",
-            "vmwarevsphere": "#E0F9D7"
-          },
-          "seriesOverrides": [],
-          "links": []
-        }
-      ]
-    },
-    {
-      "title": "New row",
-      "height": "250px",
-      "editable": true,
-      "collapse": false,
-      "panels": [
-        {
-          "title": "Combined Download Bandwidth",
-          "error": false,
-          "span": 12,
-          "editable": true,
-          "type": "graph",
-          "id": 22,
-          "datasource": null,
-          "renderer": "flot",
-          "x-axis": true,
-          "y-axis": true,
-          "y_formats": [
-            "bps",
-            "short"
-          ],
-          "grid": {
-            "leftMax": null,
-            "rightMax": null,
-            "leftMin": null,
-            "rightMin": null,
-            "threshold1": null,
-            "threshold2": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "lines": true,
-          "fill": 0,
-          "linewidth": 2,
-          "points": true,
-          "pointradius": 3,
-          "bars": false,
-          "stack": false,
-          "percentage": false,
-          "legend": {
-            "show": true,
-            "values": true,
-            "min": true,
-            "max": true,
-            "current": true,
-            "total": false,
-            "avg": true,
-            "alignAsTable": true,
-            "hideEmpty": true
-          },
-          "nullPointMode": "connected",
-          "steppedLine": false,
-          "tooltip": {
-            "value_type": "cumulative",
-            "shared": true
-          },
-          "targets": [
-            {
-              "target": "aliasByMetric(bandwidth.download.*)"
-            }
-          ],
-          "aliasColors": {
-            "digitalocean": "#6ED0E0",
-            "virtualbox": "#AEA2E0",
-            "vmwarevsphere": "#E5A8E2",
-            "openstack": "#64B0C8",
-            "vmwarevcloudair": "#F9D9F9",
-            "softlayer": "#E0F9D7"
-          },
-          "seriesOverrides": [],
-          "links": []
-        },
-        {
-          "title": "Combined Upload/Download - Bi-Directional",
-          "error": false,
-          "span": 12,
-          "editable": true,
-          "type": "graph",
-          "id": 23,
-          "datasource": null,
-          "renderer": "flot",
-          "x-axis": true,
-          "y-axis": true,
-          "y_formats": [
-            "kbytes",
-            "short"
-          ],
-          "grid": {
-            "leftMax": null,
-            "rightMax": null,
-            "leftMin": null,
-            "rightMin": null,
-            "threshold1": null,
-            "threshold2": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "lines": true,
-          "fill": 0,
-          "linewidth": 2,
-          "points": true,
-          "pointradius": 2,
-          "bars": false,
-          "stack": false,
-          "percentage": false,
-          "legend": {
-            "show": true,
-            "values": true,
-            "min": true,
-            "max": true,
-            "current": true,
-            "total": false,
-            "avg": true,
-            "alignAsTable": true,
-            "hideEmpty": true
-          },
-          "nullPointMode": "null",
-          "steppedLine": false,
-          "tooltip": {
-            "value_type": "cumulative",
-            "shared": true
-          },
-          "targets": [
-            {
-              "target": "bandwidth.download.*"
-            },
-            {
-              "target": "bandwidth.upload.*"
-            }
-          ],
-          "aliasColors": {
-            "virtualbox": "#E24D42",
-            "digitalocean": "#447EBC",
-            "amazonec2": "#DEDAF7",
-            "rackspace": "#E0F9D7",
-            "bandwidth.download.digitalocean": "#E0752D",
-            "bandwidth.download.virtualbox": "#1F78C1",
-            "bandwidth.upload.digitalocean": "#BADFF4",
-            "bandwidth.upload.virtualbox": "#AEA2E0"
-          },
-          "seriesOverrides": [],
-          "links": []
+          "refId": "A",
+          "target": "aliasByMetric(bandwidth.upload.*)"
         }
       ],
-      "showTitle": false
-    },
-    {
-      "title": "New row",
-      "height": "250px",
-      "editable": true,
-      "collapse": false,
-      "panels": [
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Combined Upload Bandwidth",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
         {
-          "title": "",
-          "error": false,
-          "span": 6,
-          "editable": true,
-          "type": "singlestat",
-          "id": 19,
-          "links": [],
-          "maxDataPoints": 100,
-          "interval": null,
-          "targets": [
-            {
-              "target": "averageSeries(bandwidth.download.*)"
-            }
-          ],
-          "cacheTimeout": null,
           "format": "bps",
-          "prefix": "CURRENT COMBINED DOWNLOAD",
-          "postfix": "",
-          "nullText": null,
-          "valueMaps": [
-            {
-              "value": "",
-              "op": "=",
-              "text": ""
-            }
-          ],
-          "nullPointMode": "connected",
-          "valueName": "current",
-          "prefixFontSize": "30%",
-          "valueFontSize": "70%",
-          "postfixFontSize": "50%",
-          "thresholds": "",
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": [
-            "rgba(50, 172, 45, 0.97)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(245, 54, 54, 0.9)"
-          ],
-          "sparkline": {
-            "show": true,
-            "full": false,
-            "lineColor": "rgb(0, 182, 255)",
-            "fillColor": "rgba(79, 75, 89, 0.34)"
-          },
-          "height": ""
+          "max": null,
+          "min": null,
+          "show": true
         },
         {
-          "title": "",
-          "error": false,
-          "span": 6,
-          "editable": true,
-          "type": "singlestat",
-          "id": 20,
-          "links": [],
-          "maxDataPoints": 100,
-          "interval": null,
-          "targets": [
-            {
-              "target": "averageSeries(bandwidth.upload.*)"
-            }
-          ],
-          "cacheTimeout": null,
+          "format": "short",
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "digitalocean": "#6ED0E0",
+        "openstack": "#64B0C8",
+        "softlayer": "#E0F9D7",
+        "virtualbox": "#AEA2E0",
+        "vmwarevcloudair": "#F9D9F9",
+        "vmwarevsphere": "#E5A8E2"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "editable": true,
+      "error": false,
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 22,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 3,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "refId": "A",
+          "target": "aliasByMetric(bandwidth.download.*)"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Combined Download Bandwidth",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
           "format": "bps",
-          "prefix": "CURRENT COMBINED UPLOAD",
-          "postfix": "",
-          "nullText": null,
-          "valueMaps": [
-            {
-              "value": "",
-              "op": "=",
-              "text": ""
-            }
-          ],
-          "nullPointMode": "connected",
-          "valueName": "avg",
-          "prefixFontSize": "30%",
-          "valueFontSize": "70%",
-          "postfixFontSize": "50%",
-          "thresholds": "",
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": [
-            "rgba(50, 172, 45, 0.97)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(245, 54, 54, 0.9)"
-          ],
-          "sparkline": {
-            "show": true,
-            "full": false,
-            "lineColor": "rgb(246, 226, 16)",
-            "fillColor": "rgba(83, 83, 68, 0.35)"
-          }
-        }
-      ]
-    },
-    {
-      "title": "New row",
-      "height": "250px",
-      "editable": true,
-      "collapse": false,
-      "panels": [
-        {
-          "title": "Digital Ocean Bandwidth",
-          "error": false,
-          "span": 12,
-          "editable": true,
-          "type": "graph",
-          "id": 9,
-          "datasource": null,
-          "renderer": "flot",
-          "x-axis": true,
-          "y-axis": true,
-          "y_formats": [
-            "kbytes",
-            "short"
-          ],
-          "grid": {
-            "leftMax": null,
-            "rightMax": null,
-            "leftMin": null,
-            "rightMin": null,
-            "threshold1": null,
-            "threshold2": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "lines": true,
-          "fill": 2,
-          "linewidth": 3,
-          "points": true,
-          "pointradius": 4,
-          "bars": false,
-          "stack": false,
-          "percentage": false,
-          "legend": {
-            "show": true,
-            "values": true,
-            "min": true,
-            "max": true,
-            "current": true,
-            "total": false,
-            "avg": true,
-            "alignAsTable": true
-          },
-          "nullPointMode": "connected",
-          "steppedLine": false,
-          "tooltip": {
-            "value_type": "cumulative",
-            "shared": true
-          },
-          "targets": [
-            {
-              "target": "bandwidth.download.digitalocean",
-              "hide": false
-            },
-            {
-              "target": "bandwidth.upload.digitalocean",
-              "hide": false
-            }
-          ],
-          "aliasColors": {
-            "bandwidth.upload.digitalocean": "#BADFF4",
-            "bandwidth.download.digitalocean": "#1F78C1"
-          },
-          "seriesOverrides": [],
-          "links": []
-        }
-      ]
-    },
-    {
-      "title": "New row",
-      "height": "250px",
-      "editable": true,
-      "collapse": false,
-      "panels": [
-        {
-          "title": "Test VirtualBox Bandwidth",
-          "error": false,
-          "span": 12,
-          "editable": true,
-          "type": "graph",
-          "id": 1,
-          "datasource": null,
-          "renderer": "flot",
-          "x-axis": true,
-          "y-axis": true,
-          "y_formats": [
-            "bits",
-            "short"
-          ],
-          "grid": {
-            "leftMax": null,
-            "rightMax": null,
-            "leftMin": null,
-            "rightMin": null,
-            "threshold1": null,
-            "threshold2": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "lines": true,
-          "fill": 3,
-          "linewidth": 3,
-          "points": true,
-          "pointradius": 4,
-          "bars": false,
-          "stack": false,
-          "percentage": false,
-          "legend": {
-            "show": true,
-            "values": true,
-            "min": true,
-            "max": true,
-            "current": true,
-            "total": false,
-            "avg": true,
-            "alignAsTable": true,
-            "rightSide": false
-          },
-          "nullPointMode": "connected",
-          "steppedLine": false,
-          "tooltip": {
-            "value_type": "cumulative",
-            "shared": true
-          },
-          "targets": [
-            {
-              "target": "bandwidth.download.virtualbox"
-            },
-            {
-              "target": "bandwidth.upload.virtualbox"
-            }
-          ],
-          "aliasColors": {
-            "bandwidth.download.virtualbox": "#1F78C1",
-            "bandwidth.upload.virtualbox": "#EAB839"
-          },
-          "seriesOverrides": [],
-          "links": []
-        }
-      ],
-      "showTitle": false
-    },
-    {
-      "title": "New row",
-      "height": "250px",
-      "editable": true,
-      "collapse": false,
-      "panels": [
-        {
-          "title": "Microsoft Azure Bandwidth",
-          "error": false,
-          "span": 12,
-          "editable": true,
-          "type": "graph",
-          "id": 3,
-          "datasource": null,
-          "renderer": "flot",
-          "x-axis": true,
-          "y-axis": true,
-          "y_formats": [
-            "bits",
-            "short"
-          ],
-          "grid": {
-            "leftMax": null,
-            "rightMax": null,
-            "leftMin": null,
-            "rightMin": null,
-            "threshold1": null,
-            "threshold2": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "lines": true,
-          "fill": 3,
-          "linewidth": 3,
-          "points": true,
-          "pointradius": 4,
-          "bars": false,
-          "stack": true,
-          "percentage": false,
-          "legend": {
-            "show": true,
-            "values": true,
-            "min": true,
-            "max": true,
-            "current": true,
-            "total": false,
-            "avg": true,
-            "alignAsTable": true,
-            "rightSide": false
-          },
-          "nullPointMode": "connected",
-          "steppedLine": false,
-          "tooltip": {
-            "value_type": "cumulative",
-            "shared": true
-          },
-          "targets": [
-            {
-              "target": "bandwidth.download.azure"
-            },
-            {
-              "target": "bandwidth.upload.azure"
-            }
-          ],
-          "aliasColors": {
-            "bandwidth.download.azure": "#1F78C1",
-            "bandwidth.upload.azure": "#AEA2E0"
-          },
-          "seriesOverrides": [],
-          "links": []
-        }
-      ],
-      "showTitle": false
-    },
-    {
-      "title": "New row",
-      "height": "250px",
-      "editable": true,
-      "collapse": false,
-      "panels": [
-        {
-          "title": "RackSpace Bandwidth",
-          "error": false,
-          "span": 12,
-          "editable": true,
-          "type": "graph",
-          "id": 5,
-          "datasource": null,
-          "renderer": "flot",
-          "x-axis": true,
-          "y-axis": true,
-          "y_formats": [
-            "bits",
-            "short"
-          ],
-          "grid": {
-            "leftMax": null,
-            "rightMax": null,
-            "leftMin": null,
-            "rightMin": null,
-            "threshold1": null,
-            "threshold2": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "lines": true,
-          "fill": 2,
-          "linewidth": 3,
-          "points": true,
-          "pointradius": 4,
-          "bars": false,
-          "stack": false,
-          "percentage": false,
-          "legend": {
-            "show": true,
-            "values": true,
-            "min": true,
-            "max": true,
-            "current": true,
-            "total": false,
-            "avg": true,
-            "alignAsTable": true
-          },
-          "nullPointMode": "connected",
-          "steppedLine": false,
-          "tooltip": {
-            "value_type": "cumulative",
-            "shared": true
-          },
-          "targets": [
-            {
-              "target": "bandwidth.download.rackspace"
-            },
-            {
-              "target": "bandwidth.upload.rackspace"
-            }
-          ],
-          "aliasColors": {
-            "bandwidth.upload.rackspace": "#BF1B00",
-            "bandwidth.download.rackspace": "#1F78C1"
-          },
-          "seriesOverrides": [],
-          "links": []
-        }
-      ]
-    },
-    {
-      "title": "New row",
-      "height": "250px",
-      "editable": true,
-      "collapse": false,
-      "panels": [
-        {
-          "title": "Google Bandwidth",
-          "error": false,
-          "span": 12,
-          "editable": true,
-          "type": "graph",
-          "id": 10,
-          "datasource": null,
-          "renderer": "flot",
-          "x-axis": true,
-          "y-axis": true,
-          "y_formats": [
-            "short",
-            "short"
-          ],
-          "grid": {
-            "leftMax": null,
-            "rightMax": null,
-            "leftMin": null,
-            "rightMin": null,
-            "threshold1": null,
-            "threshold2": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "lines": true,
-          "fill": 3,
-          "linewidth": 3,
-          "points": true,
-          "pointradius": 4,
-          "bars": false,
-          "stack": false,
-          "percentage": false,
-          "legend": {
-            "show": true,
-            "values": true,
-            "min": true,
-            "max": true,
-            "current": true,
-            "total": false,
-            "avg": true,
-            "alignAsTable": true,
-            "sortDesc": true
-          },
-          "nullPointMode": "connected",
-          "steppedLine": false,
-          "tooltip": {
-            "value_type": "cumulative",
-            "shared": true
-          },
-          "targets": [
-            {
-              "target": "bandwidth.download.google"
-            },
-            {
-              "target": "bandwidth.upload.google"
-            }
-          ],
-          "aliasColors": {
-            "bandwidth.download.google": "#1F78C1",
-            "bandwidth.upload.google": "#E0752D"
-          },
-          "seriesOverrides": [],
-          "links": []
-        }
-      ]
-    },
-    {
-      "title": "New row",
-      "height": "250px",
-      "editable": true,
-      "collapse": false,
-      "panels": [
-        {
-          "title": "IBM Softlayer Bandwidth",
-          "error": false,
-          "span": 12,
-          "editable": true,
-          "type": "graph",
-          "id": 6,
-          "datasource": null,
-          "renderer": "flot",
-          "x-axis": true,
-          "y-axis": true,
-          "y_formats": [
-            "bits",
-            "short"
-          ],
-          "grid": {
-            "leftMax": null,
-            "rightMax": null,
-            "leftMin": null,
-            "rightMin": null,
-            "threshold1": null,
-            "threshold2": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "lines": true,
-          "fill": 3,
-          "linewidth": 3,
-          "points": true,
-          "pointradius": 4,
-          "bars": false,
-          "stack": true,
-          "percentage": false,
-          "legend": {
-            "show": true,
-            "values": true,
-            "min": true,
-            "max": true,
-            "current": true,
-            "total": false,
-            "avg": true,
-            "alignAsTable": true,
-            "rightSide": false
-          },
-          "nullPointMode": "connected",
-          "steppedLine": false,
-          "tooltip": {
-            "value_type": "cumulative",
-            "shared": true
-          },
-          "targets": [
-            {
-              "target": "bandwidth.download.softlayer"
-            },
-            {
-              "target": "bandwidth.upload.softlayer"
-            }
-          ],
-          "aliasColors": {
-            "bandwidth.softlayer": "#70DBED",
-            "bandwidth.download.softlayer": "#1F78C1",
-            "bandwidth.upload.softlayer": "#7EB26D"
-          },
-          "seriesOverrides": [],
-          "links": []
-        }
-      ]
-    },
-    {
-      "title": "New row",
-      "height": "250px",
-      "editable": true,
-      "collapse": false,
-      "panels": [
-        {
-          "title": "VMware Fusion Bandwidth",
-          "error": false,
-          "span": 12,
-          "editable": true,
-          "type": "graph",
-          "id": 12,
-          "datasource": null,
-          "renderer": "flot",
-          "x-axis": true,
-          "y-axis": true,
-          "y_formats": [
-            "short",
-            "short"
-          ],
-          "grid": {
-            "leftMax": null,
-            "rightMax": null,
-            "leftMin": null,
-            "rightMin": null,
-            "threshold1": null,
-            "threshold2": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "lines": true,
-          "fill": 3,
-          "linewidth": 3,
-          "points": true,
-          "pointradius": 4,
-          "bars": false,
-          "stack": false,
-          "percentage": false,
-          "legend": {
-            "show": true,
-            "values": true,
-            "min": true,
-            "max": true,
-            "current": true,
-            "total": false,
-            "avg": true,
-            "alignAsTable": true
-          },
-          "nullPointMode": "connected",
-          "steppedLine": false,
-          "tooltip": {
-            "value_type": "cumulative",
-            "shared": true
-          },
-          "targets": [
-            {
-              "target": "bandwidth.download.vmwarefusion"
-            },
-            {
-              "target": "bandwidth.upload.vmwarefusion"
-            }
-          ],
-          "aliasColors": {
-            "bandwidth.download.vmwarefusion": "#1F78C1",
-            "bandwidth.upload.vmwarefusion": "#EA6460"
-          },
-          "seriesOverrides": [],
-          "links": []
-        }
-      ]
-    },
-    {
-      "title": "New row",
-      "height": "250px",
-      "editable": true,
-      "collapse": false,
-      "panels": [
-        {
-          "title": "Amazon EC2 Bandwidth",
-          "error": false,
-          "span": 12,
-          "editable": true,
-          "type": "graph",
-          "id": 2,
-          "datasource": null,
-          "renderer": "flot",
-          "x-axis": true,
-          "y-axis": true,
-          "y_formats": [
-            "bits",
-            "short"
-          ],
-          "grid": {
-            "leftMax": null,
-            "rightMax": null,
-            "leftMin": null,
-            "rightMin": null,
-            "threshold1": null,
-            "threshold2": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "lines": true,
-          "fill": 3,
-          "linewidth": 3,
-          "points": true,
-          "pointradius": 4,
-          "bars": false,
-          "stack": true,
-          "percentage": false,
-          "legend": {
-            "show": true,
-            "values": true,
-            "min": true,
-            "max": true,
-            "current": true,
-            "total": false,
-            "avg": true,
-            "alignAsTable": true,
-            "rightSide": false,
-            "sortDesc": true
-          },
-          "nullPointMode": "connected",
-          "steppedLine": false,
-          "tooltip": {
-            "value_type": "cumulative",
-            "shared": true
-          },
-          "targets": [
-            {
-              "target": "bandwidth.download.amazonec2"
-            },
-            {
-              "target": "bandwidth.upload.amazonec2"
-            }
-          ],
-          "aliasColors": {
-            "bandwidth.download.amazonec2": "#1F78C1",
-            "bandwidth.upload.amazonec2": "#EF843C"
-          },
-          "seriesOverrides": [],
-          "links": []
-        }
-      ]
-    },
-    {
-      "title": "New row",
-      "height": "250px",
-      "editable": true,
-      "collapse": false,
-      "panels": [
-        {
-          "title": "VMware vSphere",
-          "error": false,
-          "span": 12,
-          "editable": true,
-          "type": "graph",
-          "id": 11,
-          "datasource": null,
-          "renderer": "flot",
-          "x-axis": true,
-          "y-axis": true,
-          "y_formats": [
-            "short",
-            "short"
-          ],
-          "grid": {
-            "leftMax": null,
-            "rightMax": null,
-            "leftMin": null,
-            "rightMin": null,
-            "threshold1": null,
-            "threshold2": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "lines": true,
-          "fill": 3,
-          "linewidth": 3,
-          "points": true,
-          "pointradius": 4,
-          "bars": false,
-          "stack": false,
-          "percentage": false,
-          "legend": {
-            "show": true,
-            "values": true,
-            "min": true,
-            "max": true,
-            "current": true,
-            "total": false,
-            "avg": true,
-            "alignAsTable": true
-          },
-          "nullPointMode": "connected",
-          "steppedLine": false,
-          "tooltip": {
-            "value_type": "cumulative",
-            "shared": true
-          },
-          "targets": [
-            {
-              "target": "bandwidth.download.vmwarevsphere"
-            },
-            {
-              "target": "bandwidth.upload.vmwarevsphere"
-            }
-          ],
-          "aliasColors": {
-            "bandwidth.upload.vmwarevsphere": "#E5AC0E",
-            "bandwidth.download.vmwarevsphere": "#1F78C1"
-          },
-          "seriesOverrides": [],
-          "links": []
-        }
-      ]
-    },
-    {
-      "title": "New row",
-      "height": "250px",
-      "editable": true,
-      "collapse": false,
-      "panels": [
-        {
-          "title": "Upload on Top / Download on Bottom",
-          "error": false,
-          "span": 12,
-          "editable": true,
-          "type": "graph",
-          "id": 17,
-          "datasource": null,
-          "renderer": "flot",
-          "x-axis": true,
-          "y-axis": false,
-          "y_formats": [
-            "short",
-            "short"
-          ],
-          "grid": {
-            "leftMax": null,
-            "rightMax": null,
-            "leftMin": null,
-            "rightMin": null,
-            "threshold1": null,
-            "threshold2": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2Color": "rgba(234, 112, 112, 0.22)",
-            "thresholdLine": false
-          },
-          "lines": true,
-          "fill": 2,
-          "linewidth": 1,
-          "points": false,
-          "pointradius": 1,
-          "bars": false,
-          "stack": false,
-          "percentage": false,
-          "legend": {
-            "show": false,
-            "values": false,
-            "min": false,
-            "max": false,
-            "current": false,
-            "total": false,
-            "avg": false,
-            "alignAsTable": false
-          },
-          "nullPointMode": "connected",
-          "steppedLine": false,
-          "tooltip": {
-            "value_type": "cumulative",
-            "shared": true
-          },
-          "targets": [
-            {
-              "target": "aliasByMetric(scale(bandwidth.download.*, -1))"
-            },
-            {
-              "target": "aliasByMetric(bandwidth.upload.*)"
-            }
-          ],
-          "aliasColors": {},
-          "seriesOverrides": [],
-          "links": [],
-          "height": ""
+          "max": null,
+          "min": null,
+          "show": true
         },
         {
-          "title": "",
-          "error": false,
-          "span": 12,
-          "editable": true,
-          "type": "graph",
-          "id": 18,
-          "datasource": null,
-          "renderer": "flot",
-          "x-axis": false,
-          "y-axis": false,
-          "y_formats": [
-            "bits",
-            "bits"
-          ],
-          "grid": {
-            "leftMax": null,
-            "rightMax": null,
-            "leftMin": null,
-            "rightMin": null,
-            "threshold1": null,
-            "threshold2": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2Color": "rgba(234, 112, 112, 0.22)",
-            "thresholdLine": false
-          },
-          "lines": true,
-          "fill": 6,
-          "linewidth": 0,
-          "points": false,
-          "pointradius": 3,
-          "bars": false,
-          "stack": false,
-          "percentage": false,
-          "legend": {
-            "show": false,
-            "values": false,
-            "min": false,
-            "max": false,
-            "current": false,
-            "total": false,
-            "avg": false,
-            "alignAsTable": false
-          },
-          "nullPointMode": "connected",
-          "steppedLine": false,
-          "tooltip": {
-            "value_type": "cumulative",
-            "shared": true
-          },
-          "targets": [
-            {
-              "target": "aliasByMetric(scale(bandwidth.download.*, -1))"
-            },
-            {
-              "target": "aliasByMetric(bandwidth.upload.*)"
-            }
-          ],
-          "aliasColors": {},
-          "seriesOverrides": [],
-          "links": [],
-          "height": ""
+          "format": "short",
+          "max": null,
+          "min": null,
+          "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "amazonec2": "#DEDAF7",
+        "bandwidth.download.digitalocean": "#E0752D",
+        "bandwidth.download.virtualbox": "#1F78C1",
+        "bandwidth.upload.digitalocean": "#BADFF4",
+        "bandwidth.upload.virtualbox": "#AEA2E0",
+        "digitalocean": "#447EBC",
+        "rackspace": "#E0F9D7",
+        "virtualbox": "#E24D42"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "editable": true,
+      "error": false,
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "id": 23,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "refId": "A",
+          "target": "bandwidth.download.*"
+        },
+        {
+          "refId": "B",
+          "target": "bandwidth.upload.*"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Combined Upload/Download - Bi-Directional",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bps",
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": true,
+      "colors": [
+        "rgba(50, 172, 45, 0.97)",
+        "rgba(237, 129, 40, 0.89)",
+        "rgba(245, 54, 54, 0.9)"
+      ],
+      "datasource": null,
+      "editable": true,
+      "error": false,
+      "format": "bps",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 21
+      },
+      "height": "",
+      "id": 19,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "CURRENT COMBINED DOWNLOAD",
+      "prefixFontSize": "30%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(79, 75, 89, 0.34)",
+        "full": false,
+        "lineColor": "rgb(0, 182, 255)",
+        "show": true
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "refId": "A",
+          "target": "averageSeries(bandwidth.download.*)"
+        }
+      ],
+      "thresholds": "",
+      "title": "",
+      "type": "singlestat",
+      "valueFontSize": "70%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "",
+          "value": ""
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": true,
+      "colors": [
+        "rgba(50, 172, 45, 0.97)",
+        "rgba(237, 129, 40, 0.89)",
+        "rgba(245, 54, 54, 0.9)"
+      ],
+      "datasource": null,
+      "editable": true,
+      "error": false,
+      "format": "bps",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 21
+      },
+      "id": 20,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "CURRENT COMBINED UPLOAD",
+      "prefixFontSize": "30%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(83, 83, 68, 0.35)",
+        "full": false,
+        "lineColor": "rgb(246, 226, 16)",
+        "show": true
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "refId": "A",
+          "target": "averageSeries(bandwidth.upload.*)"
+        }
+      ],
+      "thresholds": "",
+      "title": "",
+      "type": "singlestat",
+      "valueFontSize": "70%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "",
+          "value": ""
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "aliasColors": {
+        "bandwidth.download.digitalocean": "#1F78C1",
+        "bandwidth.upload.digitalocean": "#BADFF4"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "editable": true,
+      "error": false,
+      "fill": 2,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 28
+      },
+      "id": 9,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 3,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 4,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "hide": false,
+          "refId": "A",
+          "target": "bandwidth.download.digitalocean"
+        },
+        {
+          "hide": false,
+          "refId": "B",
+          "target": "bandwidth.upload.digitalocean"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Digital Ocean Bandwidth",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bps",
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "bandwidth.download.virtualbox": "#1F78C1",
+        "bandwidth.upload.virtualbox": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "editable": true,
+      "error": false,
+      "fill": 3,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 35
+      },
+      "id": 1,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 3,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 4,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "refId": "A",
+          "target": "bandwidth.download.virtualbox"
+        },
+        {
+          "refId": "B",
+          "target": "bandwidth.upload.virtualbox"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Test VirtualBox Bandwidth",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bits",
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "bandwidth.download.azure": "#1F78C1",
+        "bandwidth.upload.azure": "#AEA2E0"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "editable": true,
+      "error": false,
+      "fill": 3,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 42
+      },
+      "id": 3,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 3,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 4,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "refId": "A",
+          "target": "bandwidth.download.azure"
+        },
+        {
+          "refId": "B",
+          "target": "bandwidth.upload.azure"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Microsoft Azure Bandwidth",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bits",
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "bandwidth.download.rackspace": "#1F78C1",
+        "bandwidth.upload.rackspace": "#BF1B00"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "editable": true,
+      "error": false,
+      "fill": 2,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 49
+      },
+      "id": 5,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 3,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 4,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "refId": "A",
+          "target": "bandwidth.download.rackspace"
+        },
+        {
+          "refId": "B",
+          "target": "bandwidth.upload.rackspace"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "RackSpace Bandwidth",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bits",
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "bandwidth.download.google": "#1F78C1",
+        "bandwidth.upload.google": "#E0752D"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "editable": true,
+      "error": false,
+      "fill": 3,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 56
+      },
+      "id": 10,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 3,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 4,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "refId": "A",
+          "target": "bandwidth.download.google"
+        },
+        {
+          "refId": "B",
+          "target": "bandwidth.upload.google"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Google Bandwidth",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "bandwidth.download.softlayer": "#1F78C1",
+        "bandwidth.softlayer": "#70DBED",
+        "bandwidth.upload.softlayer": "#7EB26D"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "editable": true,
+      "error": false,
+      "fill": 3,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 63
+      },
+      "id": 6,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 3,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 4,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "refId": "A",
+          "target": "bandwidth.download.softlayer"
+        },
+        {
+          "refId": "B",
+          "target": "bandwidth.upload.softlayer"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "IBM Softlayer Bandwidth",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bits",
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "bandwidth.download.vmwarefusion": "#1F78C1",
+        "bandwidth.upload.vmwarefusion": "#EA6460"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "editable": true,
+      "error": false,
+      "fill": 3,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 70
+      },
+      "id": 12,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 3,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 4,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "refId": "A",
+          "target": "bandwidth.download.vmwarefusion"
+        },
+        {
+          "refId": "B",
+          "target": "bandwidth.upload.vmwarefusion"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "VMware Fusion Bandwidth",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "bandwidth.download.amazonec2": "#1F78C1",
+        "bandwidth.upload.amazonec2": "#EF843C"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "editable": true,
+      "error": false,
+      "fill": 3,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 77
+      },
+      "id": 2,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 3,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 4,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "refId": "A",
+          "target": "bandwidth.download.amazonec2"
+        },
+        {
+          "refId": "B",
+          "target": "bandwidth.upload.amazonec2"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Amazon EC2 Bandwidth",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bits",
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "bandwidth.download.vmwarevsphere": "#1F78C1",
+        "bandwidth.upload.vmwarevsphere": "#E5AC0E"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "editable": true,
+      "error": false,
+      "fill": 3,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 84
+      },
+      "id": 11,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 3,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 4,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "refId": "A",
+          "target": "bandwidth.download.vmwarevsphere"
+        },
+        {
+          "refId": "B",
+          "target": "bandwidth.upload.vmwarevsphere"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "VMware vSphere",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "editable": true,
+      "error": false,
+      "fill": 2,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 91
+      },
+      "height": "",
+      "id": 17,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 1,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "refId": "A",
+          "target": "aliasByMetric(scale(bandwidth.download.*, -1))"
+        },
+        {
+          "refId": "B",
+          "target": "aliasByMetric(bandwidth.upload.*)"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Upload on Top / Download on Bottom",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "max": null,
+          "min": null,
+          "show": false
+        },
+        {
+          "format": "short",
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "editable": true,
+      "error": false,
+      "fill": 6,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 98
+      },
+      "height": "",
+      "id": 18,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 0,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 3,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "refId": "A",
+          "target": "aliasByMetric(scale(bandwidth.download.*, -1))"
+        },
+        {
+          "refId": "B",
+          "target": "aliasByMetric(bandwidth.upload.*)"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bits",
+          "max": null,
+          "min": null,
+          "show": false
+        },
+        {
+          "format": "bits",
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     }
   ],
-  "nav": [
-    {
-      "type": "timepicker",
-      "collapse": false,
-      "enable": true,
-      "status": "Stable",
-      "time_options": [
-        "5m",
-        "15m",
-        "1h",
-        "6h",
-        "12h",
-        "24h",
-        "2d",
-        "7d",
-        "30d"
-      ],
-      "refresh_intervals": [
-        "5s",
-        "10s",
-        "30s",
-        "1m",
-        "5m",
-        "15m",
-        "30m",
-        "1h",
-        "2h",
-        "1d"
-      ],
-      "now": true,
-      "notice": false
-    }
-  ],
+  "refresh": "10s",
+  "schemaVersion": 20,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
   "time": {
     "from": "now-15m",
     "to": "now"
   },
-  "templating": {
-    "list": [],
-    "enable": false
+  "timepicker": {
+    "collapse": false,
+    "enable": true,
+    "notice": false,
+    "now": true,
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "status": "Stable",
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ],
+    "type": "timepicker"
   },
-  "annotations": {
-    "list": [],
-    "enable": false
-  },
-  "refresh": "10s",
-  "version": 6,
-  "hideAllLegends": false
+  "timezone": "browser",
+  "title": "Bandwidth Dashboard",
+  "uid": "r4KWOkE7z",
+  "version": 1
 }
