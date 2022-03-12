@@ -1,5 +1,5 @@
 ---
-# the length of the iperf test in seconds
+# the time length of the iperf test in seconds
 test-length: 5
 # the time between polls, this example is 5 minutes (300 sec)
 test-interval: 300
