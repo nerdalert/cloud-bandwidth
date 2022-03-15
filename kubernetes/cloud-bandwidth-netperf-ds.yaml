@@ -1,0 +1,59 @@
+# todo: add description
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: cloud-bandwidth-netperf-ds
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      name: netperf-client
+  template:
+    metadata:
+      labels:
+        name: netperf-client
+    spec:
+      hostNetwork: true
+      hostIPC: true
+      hostPID: true
+      containers:
+        - name: cloud-bandwidth-netperf
+          image: quay.io/networkstatic/cloud-bandwidth
+          env:
+            - name: CBANDWIDTH_PERF_SERVERS
+              value: "192.168.122.1"
+            - name: CBANDWIDTH_PERF_SERVER_PORT
+              value: "12865"
+            - name: CBANDWIDTH_POLL_INTERVAL
+              value: "300"
+            - name: CBANDWIDTH_POLL_LENGTH
+              value: "5"
+            - name: CBANDWIDTH_DOWNLOAD_PREFIX
+              value: "bandwidth.netperf"
+            - name: CBANDWIDTH_GRAFANA_ADDRESS
+              value: "192.168.122.1"
+            - name: CBANDWIDTH_GRAFANA_PORT
+              value: "2003"
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          securityContext:
+            allowPrivilegeEscalation: true
+            privileged: true
+          command: ["/bin/sh","-c"]
+          args:
+          - |
+            while true; do
+              ./cloud-bandwidth -perf-servers $CBANDWIDTH_PERF_SERVERS:$NODE_NAME \
+                -perf-server-port $CBANDWIDTH_PERF_SERVER_PORT \
+                -test-interval $CBANDWIDTH_POLL_INTERVAL \
+                -test-length $CBANDWIDTH_POLL_LENGTH \
+                -tsdb-download-prefix $CBANDWIDTH_DOWNLOAD_PREFIX \
+                -grafana-address $CBANDWIDTH_GRAFANA_ADDRESS \
+                -grafana-port $CBANDWIDTH_GRAFANA_PORT \
+                -netperf \
+                -nocontainer \
+                -debug;
+            done
+      terminationGracePeriodSeconds: 60

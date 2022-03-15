@@ -13,7 +13,7 @@ RUN go mod download
 
 COPY *.go ./
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -o build -o cloud-banwidth .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -o build -o cloud-bandwidth .
 
 # Deploy the app
 FROM fedora:latest
@@ -22,8 +22,6 @@ WORKDIR /
 
 RUN dnf -y install iperf3 netperf
 
-COPY --from=build /app/cloud-banwidth /cloud-banwidth
-
-RUN chmod +x /cloud-banwidth
+COPY --from=build /app/cloud-bandwidth /cloud-bandwidth
 
 ENTRYPOINT ["/cloud-banwidth"]

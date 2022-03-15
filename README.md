@@ -1,5 +1,7 @@
 # Bandwidth Performance Monitoring
 
+[![cloud-bandwidth CI](https://github.com/nerdalert/cloud-bandwidth/actions/workflows/build-image.yml/badge.svg)](https://github.com/nerdalert/cloud-bandwidth/actions/workflows/build-image.yml)
+
 ### Overview
 
 Network visibility is one of the most important assets in a network engineer's toolkit. This is a tool measuring bandwidth 
@@ -18,6 +20,8 @@ This is a simple method of:
 - Visualizing the results into dashboards with Grafana
 - Netperf/Netserver support is optional instead of Iperf3
 
+For Kubernetes support, see [README-KUBERNETES](kubernetes/README-KUBERNETES.md) for experimental usage.
+
 ### New Opportunities to Manage Networks
 
 - Building tools has never been easier. Open source software can be leveraged to customize tools for your network or customers network 
@@ -34,21 +38,21 @@ Start the TSDB and Grafana in your preferred container runtime, below is a nice 
 your own TSDB stack as long as it supports the formatting exported shown below):
 
 ```sh
-docker run -d\
- --name go-graphite \
- --restart=always \
- -p 80:80 \
- -p 2003-2004:2003-2004 \
- gographite/go-graphite
+docker run -d \
+   --name graphite-grafana \
+   --restart=always \
+   -p 80:80 \
+   -p 2003-2004:2003-2004 \
+   quay.io/networkstatic/graphite-grafana
  
  # or using Podman
  sudo sysctl net.ipv4.ip_unprivileged_port_start=80
- podman  run -d \
- --name go-graphite \
- --restart=always \
- -p 80:80 \
- -p 2003-2004:2003-2004 \
- gographite/go-graphite
+ podman run -d \
+    --name graphite-grafana \
+    --restart=always \
+    -p 80:80 \
+    -p 2003-2004:2003-2004 \
+   quay.io/networkstatic/graphite-grafana
 ```
 
 This maps the following ports:

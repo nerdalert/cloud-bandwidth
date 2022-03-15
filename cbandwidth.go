@@ -115,7 +115,7 @@ func main() {
 			&cli.StringFlag{
 				Name:        "test-length",
 				Value:       "5",
-				Usage:       "the length of time the perf test in seconds",
+				Usage:       "the length of time the perf test run for in seconds",
 				Destination: &cliFlags.testLength,
 				EnvVars:     []string{"CBANDWIDTH_POLL_LENGTH"},
 			},
@@ -136,7 +136,7 @@ func main() {
 			&cli.StringFlag{
 				Name:        "tsdb-upload-prefix",
 				Value:       "bandwidth.upload",
-				Usage:       "the upload prefix of the stored tsdb data in graphite",
+				Usage:       "the upload prefix of the stored tsdb data in graphite, not applicable for netperf",
 				Destination: &cliFlags.uploadPrefix,
 				EnvVars:     []string{"CBANDWIDTH_UPLOAD_PREFIX"},
 			},
@@ -357,6 +357,7 @@ func netperfRun(config configuration) {
 	log.Debugf("[Config] Perf Binary = %s", netperfBinary)
 
 	// assign the perf server port from config first, then cli, lastly defaults
+	// TODO: make sure this assignment works in all scenarios
 	if config.ServerPort != "" {
 		cliFlags.perfServerPort = config.ServerPort
 	} else {

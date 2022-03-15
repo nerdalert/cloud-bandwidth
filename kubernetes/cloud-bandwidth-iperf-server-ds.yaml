@@ -1,0 +1,29 @@
+# todo: add description
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: cloud-bandwidth-iperf-server-ds
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      name: iperf-server
+  template:
+    metadata:
+      labels:
+        name: iperf-server
+    spec:
+#      Uncomment the following fields to use host networking.
+#      Host networking will keep more static addresses
+#      but also takes a different network path both
+#      internally to the node and externally inter-node
+#      hostNetwork: true
+#      hostIPC: true
+#      hostPID: true
+      containers:
+      - name: iperf3
+        image: quay.io/networkstatic/iperf3
+        args: ["-s"]
+        ports:
+        - containerPort: 5201
+      terminationGracePeriodSeconds: 60
