@@ -24,4 +24,4 @@ RUN dnf -y install iperf3 netperf
 
 COPY --from=build /app/cloud-bandwidth /cloud-bandwidth
 
-ENTRYPOINT ["/cloud-banwidth"]
+ENTRYPOINT ["/cloud-bandwidth"]

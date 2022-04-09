@@ -290,7 +290,7 @@ func iperfRun(config configuration) {
 				))
 
 				if strings.Contains(iperfDownResults, "error") {
-					log.Errorf("Error testing iperf server at %s:%s", endpointAddress, cliFlags.perfServerPort)
+					log.Errorf("Error testing to the target server at %s:%s", endpointAddress, cliFlags.perfServerPort)
 					log.Errorf("Verify iperf is running and reachable at %s:%s", endpointAddress, cliFlags.perfServerPort)
 					log.Errorln(err, iperfDownResults)
 				} else {
@@ -316,7 +316,7 @@ func iperfRun(config configuration) {
 				))
 
 				if strings.Contains(iperfUpResults, "error") {
-					log.Errorf("Error testing iperf server at %s:%s", endpointAddress, cliFlags.perfServerPort)
+					log.Errorf("Error testing to the target server at %s:%s", endpointAddress, cliFlags.perfServerPort)
 					log.Errorf("Verify iperf is running and reachable at %s:%s", endpointAddress, cliFlags.perfServerPort)
 					log.Errorln(err, iperfUpResults)
 				} else {
@@ -383,7 +383,7 @@ func netperfRun(config configuration) {
 				))
 				// the error reporting is not great for netperf so we are basically looking for a word in the STDERR
 				if strings.Contains(iperfDownResults, "sure") {
-					log.Errorf("Error testing iperf server at %s:%s", endpointAddress, cliFlags.perfServerPort)
+					log.Errorf("Error testing to the target server at %s:%s", endpointAddress, cliFlags.perfServerPort)
 					log.Errorf("Verify netserver is running and reachable at %s:%s", endpointAddress, cliFlags.perfServerPort)
 				} else {
 					// verify the results are a valid integer and convert to bps for plotting.
