@@ -122,7 +122,7 @@ func main() {
 			&cli.StringFlag{
 				Name:        "perf-server-port",
 				Value:       defaultIperfPort,
-				Usage:       "iperf server port",
+				Usage:       "iperf server port (iperf default is 5201 and netperf default is 12865",
 				Destination: &cliFlags.perfServerPort,
 				EnvVars:     []string{"CBANDWIDTH_PERF_SERVER_PORT"},
 			},
@@ -348,7 +348,7 @@ func netperfRun(config configuration) {
 		if cliFlags.imageRepo == defaultIperfRepo {
 
 			cliFlags.imageRepo = defaultNetperfRepo
-			log.Debugf("WTF [Config] Perf Binary = %s", cliFlags.imageRepo)
+			log.Debugf("[Config] Perf Binary = %s", cliFlags.imageRepo)
 
 		}
 		runtime := checkContainerRuntime()
@@ -357,13 +357,12 @@ func netperfRun(config configuration) {
 	log.Debugf("[Config] Perf Binary = %s", netperfBinary)
 
 	// assign the perf server port from config first, then cli, lastly defaults
-	// TODO: make sure this assignment works in all scenarios
 	if config.ServerPort != "" {
 		cliFlags.perfServerPort = config.ServerPort
-	} else {
+	}
+	if cliFlags.perfServerPort == defaultIperfPort {
 		cliFlags.perfServerPort = defaultNetperfPort
 	}
-
 	log.Debugf("[Config] Perf Server Port = %s", cliFlags.perfServerPort)
 
 	// begin the program loop

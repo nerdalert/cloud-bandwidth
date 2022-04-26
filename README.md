@@ -224,7 +224,7 @@ also perfectly valid to use as well. Alternatively, the name value `ip:name` you
 be the source node running the test. In some scenarios you could have a bunch of endpoints
 testing to a single node you would want to record them to grafana as the source.
 Regardless, the name should be something meaningful to the data visualization in Grafana and
-doesn't noblesse need to be the name of the host you are testing to.
+doesn't need to be the name of the host you are testing to.
 
 ```shell
 cloud-bandwidth \
