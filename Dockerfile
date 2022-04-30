@@ -1,6 +1,6 @@
 # Application container for the project https://github.com/nerdalert/cloud-bandwidth
 # Build the binary
-FROM golang:1.17-alpine AS build
+FROM golang:1.18-alpine AS build
 
 MAINTAINER Brent Salisbury <brent.salisbury@gmail.com>
 

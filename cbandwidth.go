@@ -56,6 +56,7 @@ type flags struct {
 	grafanaPort    string
 	testInterval   string
 	testLength     string
+	parallelConn   string
 	perfServerPort string
 	downloadPrefix string
 	uploadPrefix   string
@@ -118,6 +119,13 @@ func main() {
 				Usage:       "the length of time the perf test run for in seconds",
 				Destination: &cliFlags.testLength,
 				EnvVars:     []string{"CBANDWIDTH_POLL_LENGTH"},
+			},
+			&cli.StringFlag{
+				Name:        "parallel-connections",
+				Value:       "1",
+				Usage:       "Iperf only, number of simultaneous Iperf connections to make to the server",
+				Destination: &cliFlags.parallelConn,
+				EnvVars:     []string{"CBANDWIDTH_IPERF_PARALLEL"},
 			},
 			&cli.StringFlag{
 				Name:        "perf-server-port",
@@ -282,8 +290,9 @@ func iperfRun(config configuration) {
 					endpointName = endpointAddress
 				}
 				// Test the download speed to the iperf endpoint.
-				iperfDownResults, err := runCmd(fmt.Sprintf("%s -P 1 -t %s -f k -p %s -c %s | tail -n 3 | head -n1 | awk '{print $7}'",
+				iperfDownResults, err := runCmd(fmt.Sprintf("%s -P %s -t %s -f k -p %s -c %s | tail -n 3 | head -n1 | awk '{print $7}'",
 					iperfBinary,
+					cliFlags.parallelConn,
 					cliFlags.testLength,
 					cliFlags.perfServerPort,
 					endpointAddress,
@@ -308,8 +317,9 @@ func iperfRun(config configuration) {
 				}
 
 				// Test the upload speed to the iperf endpoint.
-				iperfUpResults, err := runCmd(fmt.Sprintf("%s -P 1 -R -t %s -f k -p %s -c %s | tail -n 3 | head -n1 | awk '{print $7}'",
+				iperfUpResults, err := runCmd(fmt.Sprintf("%s -P %s -R -t %s -f k -p %s -c %s | tail -n 3 | head -n1 | awk '{print $7}'",
 					iperfBinary,
+					cliFlags.parallelConn,
 					cliFlags.testLength,
 					cliFlags.perfServerPort,
 					endpointAddress,
